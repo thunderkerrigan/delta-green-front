@@ -1,0 +1,117 @@
+@font-face {
+  font-family: Holocene;
+  src: url('../Fonts/KGHolocene.ttf');
+}
+
+@font-face {
+  font-family: 1942;
+  src: url('../Fonts/1942.ttf');
+}
+
+
+@font-face {
+  font-family: SelectiveScript;
+  src: url('../Fonts/Selectric\ Script.ttf');
+}
+
+
+@font-face {
+  font-family: VeteranTypewriter;
+  src: url('../Fonts/veteran\ typewriter.ttf');
+}
+
+
+@font-face {
+  font-family: ToxTypewriter;
+  src: url('../Fonts/Tox\ Typewriter.ttf');
+}
+
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 120s linear;
+  }
+}
+
+.App-header {
+  background-color: #123718;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: Holocene;
+  font-size: calc(10px + 7vmin);
+  color: white;
+}
+
+.text-header--4 {
+  background-color: #123718;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: Holocene;
+  color: white;
+}
+
+.text-header--1 {
+  background-color: #123718;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: ToxTypewriter;
+  color: white;
+}
+
+.text-header--2 {
+  background-color: #123718;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: SelectiveScript;
+  color: white;
+}
+
+.text-header--3 {
+  background-color: #123718;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: VeteranTypewriter;
+  color: white;
+}
+
+.text-header--5 {
+  background-color: #123718;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: 1942;
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
