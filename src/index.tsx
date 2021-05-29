@@ -1,16 +1,33 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import './index.css'
+import './Fonts/fonts.css'
 import App from './App/App'
 import reportWebVitals from './reportWebVitals'
 import { StrictMode } from 'react'
 import { BrowserRouter } from 'react-router-dom'
+import { createMuiTheme, CssBaseline, ThemeProvider } from '@material-ui/core'
+
+const theme = createMuiTheme({
+  overrides: {
+    MuiCssBaseline: {
+      '@global': {
+        html: {
+          WebkitFontSmoothing: 'auto',
+        },
+      },
+    },
+  },
+})
 
 ReactDOM.render(
   <StrictMode>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </ThemeProvider>
   </StrictMode>,
   document.getElementById('root'),
 )

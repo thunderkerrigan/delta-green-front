@@ -1,0 +1,28 @@
+@font-face {
+    font-family: Holocene;
+    src: url('./KGHolocene.ttf');
+  }
+  
+  @font-face {
+    font-family: 1942;
+    src: url('./1942.ttf');
+  }
+  
+  
+  @font-face {
+    font-family: SelectiveScript;
+    src: url('./Selectric\ Script.ttf');
+  }
+  
+  
+  @font-face {
+    font-family: VeteranTypewriter;
+    src: url('./veteran\ typewriter.ttf');
+  }
+  
+  
+  @font-face {
+    font-family: ToxTypewriter;
+    src: url('./Tox\ Typewriter.ttf');
+  }
+  

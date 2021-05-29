@@ -1,0 +1,21 @@
+.AppBar-logo {
+    height: 55px;
+    pointer-events: none;
+    padding: 0 8px;
+  }
+  
+  @media (prefers-reduced-motion: no-preference) {
+    .AppBar-logo {
+      animation: AppBar-logo-spin infinite 120s linear;
+    }
+  }
+
+  @keyframes AppBar-logo-spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  
