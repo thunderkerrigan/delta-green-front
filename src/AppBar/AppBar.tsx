@@ -39,6 +39,7 @@ const useStyles = makeStyles((theme: Theme) =>
       [theme.breakpoints.up('sm')]: {
         display: 'block',
       },
+      fontFamily: 'VeteranTypewriter',
     },
     search: {
       position: 'relative',
