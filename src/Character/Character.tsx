@@ -1,35 +1,26 @@
-module.exports = {
-  root: true,
-  env: {
-    browser: true,
-    es6: true,
-  },
-  extends: [
-    'eslint:recommended',
-    'plugin:react/recommended',
-    'plugin:@typescript-eslint/eslint-recommended',
-    'plugin:@typescript-eslint/recommended',
-    'plugin:react-hooks/recommended',
-  ],
-  parser: '@typescript-eslint/parser',
-  parserOptions: {
-    ecmaFeatures: {
-      experimentalObjectRestSpread: true,
-      jsx: true,
-    },
-    sourceType: 'module',
-  },
-  plugins: ['react', 'babel', '@typescript-eslint'],
-  rules: {
-    indent: [
-      'error',
-      4,
-      {
-        SwitchCase: 1,
-      },
-    ],
-    'linebreak-style': ['error', 'unix'],
-    quotes: ['error', 'single'],
-    semi: ['error', 'never'],
-  },
+import React, { useEffect, useState } from 'react'
+import {
+  CharacterModel,
+  skills,
+  knowledgeSkills,
+} from 'delta-green-core/src/models/CharacterModel'
+import axios from 'axios'
+
+const Character = (): JSX.Element => {
+  const [character, setCharacter] = useState<CharacterModel>()
+  useEffect(() => {
+    const fetchCharacter = async () => {
+      const response = await axios.get<CharacterModel>(
+        'http://localhost:33582/api/maleCharacter',
+      )
+      setCharacter(response.data)
+    }
+    fetchCharacter()
+    return () => {
+      // TODO
+    }
+  }, [])
+  return <div>{JSON.stringify(character)}</div>
 }
+
+export default Character

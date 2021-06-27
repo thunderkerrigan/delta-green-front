@@ -8,6 +8,7 @@ import {
 import DeltaGreenAppBar from '../AppBar/AppBar'
 import { Route } from 'react-router'
 import Main from '../Main/Main'
+import Character from '../Character/Character'
 
 const stuff: DossierInterface = {
   codename: 'ITT-4325',
@@ -23,6 +24,7 @@ const App = (): JSX.Element => (
     <DeltaGreenAppBar />
     <Route strict path="/">
       <Main />
+      <Character />
     </Route>
   </div>
 )
