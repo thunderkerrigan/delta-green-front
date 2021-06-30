@@ -1,30 +1,3 @@
-@font-face {
-  font-family: Holocene;
-  src: url('../Fonts/KGHolocene.ttf');
-}
-
-@font-face {
-  font-family: 1942;
-  src: url('../Fonts/1942.ttf');
-}
-
-
-@font-face {
-  font-family: SelectiveScript;
-  src: url('../Fonts/Selectric\ Script.ttf');
-}
-
-
-@font-face {
-  font-family: VeteranTypewriter;
-  src: url('../Fonts/veteran\ typewriter.ttf');
-}
-
-
-@font-face {
-  font-family: ToxTypewriter;
-  src: url('../Fonts/Tox\ Typewriter.ttf');
-}
 
 .App {
   text-align: center;
