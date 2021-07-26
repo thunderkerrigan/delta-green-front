@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react'
 
 const Main = (): JSX.Element => {
-  return <Fragment>DERNIERE NEWS</Fragment>
+  return <Fragment></Fragment>
 }
 
 export default Main

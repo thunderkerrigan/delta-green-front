@@ -6,9 +6,14 @@ import App from './App/App'
 import reportWebVitals from './reportWebVitals'
 import { StrictMode } from 'react'
 import { BrowserRouter } from 'react-router-dom'
-import { createMuiTheme, CssBaseline, ThemeProvider } from '@material-ui/core'
+import {
+  createTheme,
+  CssBaseline,
+  ThemeProvider,
+} from '@material-ui/core'
+import '@fontsource/roboto'
 
-const theme = createMuiTheme({
+const theme = createTheme({
   overrides: {
     MuiCssBaseline: {
       '@global': {
