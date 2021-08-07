@@ -56,12 +56,24 @@ const Character = (): JSX.Element => {
           <Divider className={classes.divider} />
         </Grid>
         <Grid item container spacing={2}>
-          <GeneralInfo {...character} />
-          <StatsSet stats={character?.stats} />
+          <Grid item xs={12} lg>
+            <GeneralInfo {...character} />
+          </Grid>
+          <Grid item xs={12} lg>
+            <StatsSet stats={character?.stats} />
+          </Grid>
           <Grid item xs={12}>
             <Divider className={classes.divider} />
           </Grid>
-          <Grid item container>
+          <Grid
+            style={{ flex: 'grow' }}
+            item
+            xs={12}
+            container
+            spacing={2}
+            alignContent="center"
+            justifyContent="flex-start"
+          >
             <SkillsSet
               category={'Connaissance'}
               skills={character?.knowledgeSkills}

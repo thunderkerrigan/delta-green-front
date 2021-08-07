@@ -12,6 +12,8 @@ import {
   ThemeProvider,
 } from '@material-ui/core'
 import '@fontsource/roboto'
+import { Provider } from 'react-redux'
+import { store } from './redux/store'
 
 const theme = createTheme({
   overrides: {
@@ -27,12 +29,14 @@ const theme = createTheme({
 
 ReactDOM.render(
   <StrictMode>
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </ThemeProvider>
+    <Provider store={store}>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </ThemeProvider>
+    </Provider>
   </StrictMode>,
   document.getElementById('root'),
 )

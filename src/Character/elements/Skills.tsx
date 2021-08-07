@@ -2,6 +2,7 @@ import React, { Fragment } from 'react'
 import {
   Grid,
   makeStyles,
+  Paper,
   Typography,
 } from '@material-ui/core'
 import { Skills } from 'delta-green-core/src/models/CharacterModel'
@@ -10,11 +11,11 @@ const useStyles = makeStyles({
   categorie: {
     minWidth: '140px',
     padding: '0 16px',
-    fontFamily:'VeteranTypewriter',
+    fontFamily: 'VeteranTypewriter',
     backgroundColor: '#123718',
     color: 'white',
     borderRadius: '4px',
-    boxShadow:'5px 5px 5px black'
+    boxShadow: '5px 5px 5px black',
   },
 })
 
@@ -38,19 +39,21 @@ export const SkillsSet = ({
     masterySkills?.map((i) => i?.toString()) || []
   return (
     <Grid
-      item
+      style={{ padding: '1em' }}
+      component={Paper}
       container
       direction="row"
       justifyContent="flex-start"
       alignContent="flex-start"
       spacing={2}
-      xs
+      item
+      xs={12}
+      sm={6}
+      md={4}
+      lg={3}
     >
       <Grid item>
-        <Typography
-          variant="h6"
-          className={classes.categorie}
-        >
+        <Typography variant="h6" className={classes.categorie}>
           {category}
         </Typography>
       </Grid>

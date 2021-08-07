@@ -17,6 +17,8 @@ import moment from 'moment'
 import logo from '../../Images/logo.png'
 import ID_background from '../../Images/ID_background4.jpg'
 import { CSSProperties } from '@material-ui/core/styles/withStyles'
+import RandomWord from '../../utils/RandomWord'
+import useRandomWord from '../../utils/useRandomWord'
 
 const useStyles = makeStyles((theme) => ({
   portrait: { width: theme.spacing(10), height: theme.spacing(10) },
@@ -28,17 +30,20 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 'bold',
   },
   idCard: {
+    margin: 'auto',
     // border: '1px solid black',
     borderRadius: '6px',
     boxShadow: ' 2px 2px 6px black',
 
     backgroundImage: `url(${ID_background})`,
     backgroundSize: 'cover',
-    height: '312px',
+    height: '303px',
+    width: '500px',
   },
   dgHeader: {
     marginTop: theme.spacing(2),
     backgroundColor: '#123718',
+    height: '52px',
   },
   dgTitle: {
     fontFamily: 'VeteranTypewriter',
@@ -143,12 +148,10 @@ export const GeneralInfo = (
   if (Object.keys(character).length > 0) {
     return (
       <Grid
-        item
         className={classes.idCard}
         container
         spacing={2}
         justifyContent="center"
-        xs={5}
       >
         <Grid
           item
@@ -196,7 +199,9 @@ export const GeneralInfo = (
                 variant="overline"
                 className={classes.characterLineInfo}
               >
-                {`${moment(dob).format('DD/MM/YY')}`}
+                <RandomWord
+                  word={`${moment(dob).format('DD/MM/YY')}`}
+                />
               </Typography>
             </Tooltip>
           </Grid>
@@ -215,7 +220,9 @@ export const GeneralInfo = (
               <Typography
                 align="left"
                 className={classes.characterLineInfo}
-              >{`${firstName} ${lastName}`}</Typography>
+              >
+                <RandomWord word={`${firstName} ${lastName}`} />
+              </Typography>
             </Grid>
             <Grid item xs>
               {gender && (
@@ -224,7 +231,7 @@ export const GeneralInfo = (
                   className={classes.characterLineInfo}
                 >
                   {gender === 'male' ? '🚹 ' : '🚺 '}
-                  {gender}
+                  <RandomWord word={` ${gender}`} />
                 </Typography>
               )}
             </Grid>
@@ -232,13 +239,19 @@ export const GeneralInfo = (
               <Typography
                 align="left"
                 className={classes.characterLineInfo}
-              >{`Profession: ${profession?.name}`}</Typography>
+              >
+                Profession:
+                <RandomWord word={` ${profession?.name}`} />
+              </Typography>
             </Grid>
             <Grid item xs>
               <Typography
                 align="left"
                 className={classes.characterLineInfo}
-              >{`Employeur: ${employer}`}</Typography>
+              >
+                Employeur:
+                <RandomWord word={` ${employer}`} />
+              </Typography>
             </Grid>
           </Grid>
         </Grid>
@@ -246,19 +259,17 @@ export const GeneralInfo = (
           <Clearance clearanceLevel={clearanceLevel} />
         </Grid>
         <Grid item xs={12}>
-          <UserBarCode value={educationAndOccupationalHistory} />
+          <UserBarCode value={`${educationAndOccupationalHistory}`} />
         </Grid>
       </Grid>
     )
   } else {
     return (
       <Grid
-        item
         className={classes.idCard}
         container
         spacing={2}
         justifyContent="center"
-        xs={5}
       >
         <Grid
           item

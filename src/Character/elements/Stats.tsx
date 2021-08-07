@@ -1,6 +1,23 @@
 /* eslint-disable quotes */
 import React, { Fragment } from 'react'
-import { Grid, makeStyles, Typography } from '@material-ui/core'
+import {
+  Avatar,
+  Fade,
+  Grid,
+  makeStyles,
+  Tooltip,
+  Typography,
+} from '@material-ui/core'
+import {
+  deepOrange,
+  amber,
+  yellow,
+  lime,
+  lightGreen,
+  green,
+  red,
+  grey,
+} from '@material-ui/core/colors'
 import { Stat } from 'delta-green-core/src/models/CharacterModel'
 import { Radar } from 'react-chartjs-2'
 
@@ -8,6 +25,7 @@ const useStyles = makeStyles({
   title: {
     margin: 'auto',
     minWidth: '140px',
+    width: '365px',
     padding: '0 16px',
     fontFamily: 'VeteranTypewriter',
     backgroundColor: '#123718',
@@ -15,8 +33,34 @@ const useStyles = makeStyles({
     borderRadius: '4px',
     boxShadow: '5px 5px 5px black',
   },
-  statTitle: { textDecorationLine: 'underline', fontWeight: 'bold' },
+  statTitle: { textDecorationLine: 'underline', fontWeight: 900 },
+  statPercentage: {
+    backgroundColor: grey[300],
+    borderRadius: '4px',
+    padding: '2px',
+  },
+  // statItem: { border: '1px solid grey' },
 })
+
+const statScoreColor = (
+  score: number,
+): Record<keyof typeof green, string> => {
+  if (score > 17) {
+    return green
+  } else if (score > 14) {
+    return lightGreen
+  } else if (score > 12) {
+    return lime
+  } else if (score > 10) {
+    return yellow
+  } else if (score > 8) {
+    return amber
+  } else if (score > 6) {
+    return deepOrange
+  } else {
+    return red
+  }
+}
 
 export const StatsSet = ({
   stats,
@@ -24,11 +68,8 @@ export const StatsSet = ({
   stats?: Record<Stat, number>
 }): JSX.Element => {
   const classes = useStyles()
-  if (stats === undefined) {
-    return <Fragment />
-  }
 
-  const data = {
+  const data = stats && {
     labels: Object.keys(stats),
     datasets: [
       {
@@ -65,46 +106,85 @@ export const StatsSet = ({
       },
     },
   }
-  const statsValue = Object.keys(stats).map((stat) => {
-    const value = stats[stat as Stat]
-    const percentage = value * 5
-    return (
-      <Grid
-        item
-        container
-        alignItems="baseline"
-        xs
-        key={stat}
-        direction="row"
-      >
-        <Grid item xs>
-          <Typography
-            className={classes.statTitle}
-            align="left"
-          >{`${stat}:`}</Typography>
+  const statsValue =
+    stats &&
+    Object.keys(stats).map((stat) => {
+      const value = stats[stat as Stat]
+      const percentage = value * 5
+      const statColor = statScoreColor(stats[stat as Stat])
+      return (
+        <Grid
+          key={stat}
+          item
+          container
+          alignItems="baseline"
+          direction="row"
+          xs={6}
+          // className={classes.statItem}
+        >
+          <Grid item xs>
+            <Tooltip
+              title={stat}
+              enterDelay={300}
+              leaveDelay={100}
+              placement="left-start"
+            >
+              <Typography
+                className={classes.statTitle}
+                align="left"
+              >{`${stat.slice(0, 3)}:`}</Typography>
+            </Tooltip>
+          </Grid>
+          <Grid item xs>
+            <Avatar
+              style={{
+                backgroundColor: statColor[700],
+                color: 'white',
+                fontWeight: 'bold',
+              }}
+            >
+              {stats[stat as Stat]}
+            </Avatar>
+          </Grid>
+          <Grid item xs>
+            <Typography
+              className={classes.statPercentage}
+            >{`${percentage} %`}</Typography>
+          </Grid>
         </Grid>
-        <Grid item>
-          <Typography>{stats[stat as Stat]}</Typography>
-        </Grid>
-        <Grid item xs>
-          <Typography>{`${percentage} %`}</Typography>
-        </Grid>
-      </Grid>
-    )
-  })
+      )
+    })
   return (
-    <Grid item xs container spacing={2} style={{ height: '305px' }}>
-      <Grid item>
-        <Typography variant="h6" className={classes.title}>
-          {"Résultat Préliminaire d'évalution:"}
-        </Typography>
-      </Grid>
-      <Grid item container spacing={2} direction="column" xs={6}>
-        {statsValue}
-      </Grid>
-      <Grid item xs={6}>
-        <Radar data={data} options={config} />
-      </Grid>
-    </Grid>
+    <Fade in={stats !== undefined}>
+      <div style={{ width: '100%', height: '305px' }}>
+        {stats && (
+          <Grid container spacing={2} style={{ height: '305px' }}>
+            <Grid item xs={12}>
+              <Typography variant="h6" className={classes.title}>
+                {"Résultat Préliminaire d'évalution:"}
+              </Typography>
+            </Grid>
+            <Fragment>
+              <Grid item container spacing={2} direction="row" xs={6}>
+                {statsValue}
+              </Grid>
+              <Grid item xs={6}>
+                <div style={{ width: '300px', height: '300px' }}>
+                  <Radar
+                    width={300}
+                    height={300}
+                    data={data}
+                    options={config}
+                  />
+                </div>
+              </Grid>
+            </Fragment>
+          </Grid>
+        )}
+        {stats === undefined && (
+          <Grid xs={12} style={{ width: '300px', height: '300px' }} />
+        )}
+      </div>
+    </Fade>
   )
 }
