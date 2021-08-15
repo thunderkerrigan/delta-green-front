@@ -162,7 +162,7 @@ export const GeneralInfo = (
         >
           <img src={logo} className={classes.dgLogo} />
           <Typography variant="h6" className={classes.dgTitle}>
-            DELTA GREEN EMPLOYEE
+          DELTA GREEN AGENT
           </Typography>
         </Grid>
         <Grid
@@ -280,7 +280,7 @@ export const GeneralInfo = (
         >
           <img src={logo} className={classes.dgLogo} />
           <Typography variant="h6" className={classes.dgTitle}>
-            DELTA GREEN EMPLOYEE
+            DELTA GREEN AGENT
           </Typography>
         </Grid>
         <Grid

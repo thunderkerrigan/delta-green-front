@@ -15,6 +15,7 @@ import { StatsSet } from './elements/Stats'
 
 const useStyles = makeStyles((theme) => ({
   portrait: { width: theme.spacing(10), height: theme.spacing(10) },
+  // button: { backgroundColor: '#123738' },
   characterSheet: {
     //margin: theme.spacing(2),
     padding: theme.spacing(3),
@@ -45,9 +46,10 @@ const Character = (): JSX.Element => {
     <Paper className={classes.characterSheet}>
       <Grid item container spacing={2} xs>
         <Button
+          // className={classes.button}
           startIcon={<RefreshIcon />}
           variant="contained"
-          color="primary"
+          color="secondary"
           onClick={fetchCharacter}
         >
           Reroll

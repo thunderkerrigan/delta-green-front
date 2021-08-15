@@ -40,6 +40,7 @@ const useStyles = makeStyles((theme: Theme) =>
         display: 'block',
       },
       fontFamily: 'VeteranTypewriter',
+      color: 'white',
     },
     search: {
       position: 'relative',
@@ -95,8 +96,9 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const DeltaGreenAppBar = (): JSX.Element => {
   const classes = useStyles()
-  const [anchorEl, setAnchorEl] =
-    React.useState<null | HTMLElement>(null)
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(
+    null,
+  )
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
     React.useState<null | HTMLElement>(null)
 

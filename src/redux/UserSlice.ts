@@ -9,7 +9,7 @@ const initialState: UserState = {
 }
 
 export const userSlice = createSlice({
-  name: 'counter',
+  name: 'user',
   initialState,
   reducers: {
     connect: (state) => {

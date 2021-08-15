@@ -6,36 +6,18 @@ import App from './App/App'
 import reportWebVitals from './reportWebVitals'
 import { StrictMode } from 'react'
 import { BrowserRouter } from 'react-router-dom'
-import {
-  createTheme,
-  CssBaseline,
-  ThemeProvider,
-} from '@material-ui/core'
+import { CssBaseline } from '@material-ui/core'
 import '@fontsource/roboto'
 import { Provider } from 'react-redux'
 import { store } from './redux/store'
 
-const theme = createTheme({
-  overrides: {
-    MuiCssBaseline: {
-      '@global': {
-        html: {
-          WebkitFontSmoothing: 'auto',
-        },
-      },
-    },
-  },
-})
-
 ReactDOM.render(
   <StrictMode>
     <Provider store={store}>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
-      </ThemeProvider>
+      <CssBaseline />
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
     </Provider>
   </StrictMode>,
   document.getElementById('root'),
