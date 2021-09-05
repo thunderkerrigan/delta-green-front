@@ -1,7 +1,7 @@
-import React, { ReactElement, useEffect, useRef } from 'react'
+import React, { ReactElement, useEffect } from 'react'
 import './App.css'
 import DeltaGreenAppBar from '../AppBar/AppBar'
-import { Route } from 'react-router'
+import { Redirect, Route } from 'react-router'
 import Main from '../Main/Main'
 import Character from '../Character/Character'
 import {
@@ -15,6 +15,8 @@ import { RootState } from '../redux/store'
 import { useSelector } from 'react-redux'
 import { FakeFront } from '../FakeFront'
 import { useConnection } from '../services/useConnection'
+import { Article } from '../Article/Article'
+import { v4 as uuidV4 } from 'uuid'
 
 // const stuff: DossierInterface = {
 //   codename: 'ITT-4325',
@@ -54,12 +56,9 @@ const theme = createTheme({
 const App = (): ReactElement => {
   const user = useSelector((state: RootState) => state.user)
   const { tryConnection } = useConnection()
-  const didRequest = useRef(false)
+
   useEffect(() => {
-    if (!didRequest.current) {
-      tryConnection()
-      didRequest.current = true
-    }
+    tryConnection()
   }, [tryConnection])
   if (user.isConnected) {
     return (
@@ -68,9 +67,15 @@ const App = (): ReactElement => {
           <DeltaGreenAppBar />
           <Toolbar />
           <Container disableGutters>
-            <Route strict path="/">
+            <Route exact strict path="/">
               <Main />
               <Character />
+            </Route>
+            <Route exact path="/article">
+              <Redirect to={`/article/${uuidV4()}`} />
+            </Route>
+            <Route path="/article/:id">
+              <Article />
             </Route>
           </Container>
         </div>

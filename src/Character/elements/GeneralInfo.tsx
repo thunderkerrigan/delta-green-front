@@ -18,7 +18,6 @@ import logo from '../../Images/logo.png'
 import ID_background from '../../Images/ID_background4.jpg'
 import { CSSProperties } from '@material-ui/core/styles/withStyles'
 import RandomWord from '../../utils/RandomWord'
-import useRandomWord from '../../utils/useRandomWord'
 
 const useStyles = makeStyles((theme) => ({
   portrait: { width: theme.spacing(10), height: theme.spacing(10) },
@@ -162,7 +161,7 @@ export const GeneralInfo = (
         >
           <img src={logo} className={classes.dgLogo} />
           <Typography variant="h6" className={classes.dgTitle}>
-          DELTA GREEN AGENT
+            DELTA GREEN AGENT
           </Typography>
         </Grid>
         <Grid

@@ -30,8 +30,7 @@ import {
   RestaurantMenu,
   ShoppingCart,
 } from '@material-ui/icons'
-import { useDispatch, useSelector } from 'react-redux'
-import { connect } from '../redux/UserSlice'
+import { useSelector } from 'react-redux'
 import Slider from 'react-slick'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'

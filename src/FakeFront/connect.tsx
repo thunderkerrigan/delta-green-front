@@ -1,32 +1,20 @@
 import {
   Button,
-  Card,
-  CardActionArea,
-  CardContent,
-  CardMedia,
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
-  Divider,
   Grid,
-  Grow,
-  makeStyles,
-  Paper,
   Slide,
-  Slider,
   TextField,
-  Typography,
 } from '@material-ui/core'
 import { TransitionProps } from '@material-ui/core/transitions'
-import React, { useEffect, useState } from 'react'
-import { isUint16Array } from 'util/types'
+import React, { useState } from 'react'
 import { useConnection } from '../services/useConnection'
-import { Pizza, pizzas } from './pizzas/pizzas'
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
-    children?: React.ReactElement<any, any>
+    children?: React.ReactElement
   },
   ref: React.Ref<unknown>,
 ) {
@@ -46,32 +34,10 @@ interface Props {
   handleClose: () => void
 }
 
-const useStyles = makeStyles({
-  root: {
-    backgroundColor: 'rgba(255,255,255, 0.1)',
-    backdropFilter: 'blur(5px)',
-  },
-  details: {
-    display: 'flex',
-    flexDirection: 'column',
-  },
-  content: {
-    flex: '1 0 auto',
-  },
-  cover: {
-    display: 'flex',
-    minWidth: 150,
-    height: '100%',
-    boxShadow: 'inset -2px 0 4px black',
-  },
-})
-
-interface PizzaCount extends Pizza {
-  count: number
-}
-
-export const Connect = ({ open, handleClose }: Props) => {
-  const classes = useStyles()
+export const Connect = ({
+  open,
+  handleClose,
+}: Props): JSX.Element => {
   const [username, setUsername] = useState<string>('')
   const [password, setPassword] = useState<string>('')
   const { tryLogin } = useConnection()

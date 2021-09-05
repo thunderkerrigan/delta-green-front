@@ -18,7 +18,7 @@ import { pizzas } from './pizzas/pizzas'
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
-    children?: React.ReactElement<any, any>
+    children?: React.ReactElement
   },
   ref: React.Ref<unknown>,
 ) {
@@ -48,7 +48,7 @@ const useStyles = makeStyles({
   },
 })
 
-export const Menu = ({ open, handleClose }: Props) => {
+export const Menu = ({ open, handleClose }: Props): JSX.Element => {
   const classes = useStyles()
   return (
     <Dialog

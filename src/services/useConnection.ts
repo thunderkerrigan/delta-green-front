@@ -10,6 +10,7 @@ export const useConnection = (): {
     password: string,
   ) => Promise<null | string>
   trySignUp: (username: string, password: string) => Promise<void>
+  getTinyJWT: () => Promise<{ token: string }>
 } => {
   const dispatch = useDispatch()
   const [cookies, setCookie, removeCookie] = useCookies([
@@ -26,10 +27,6 @@ export const useConnection = (): {
         },
       )
       if (data === true) {
-        setCookie('delta-green.JWT', data, {
-          path: '/',
-          sameSite: 'strict',
-        })
         dispatch(connect())
       } else {
         removeCookie('delta-green.JWT')
@@ -89,6 +86,20 @@ export const useConnection = (): {
       dispatch(disconnect())
     }
   }
+  const getTinyJWT = async () => {
+    const { data } = await axios.get<string>(
+      'http://localhost:33582/login/tiny',
+      {
+        headers: {
+          Authorization: `Bearer ${cookies['delta-green.JWT']}`,
+        },
+      },
+    )
+    if (data != '') {
+      return { token: data }
+    }
+    return { token: '' }
+  }
 
-  return { tryConnection, tryLogin, trySignUp }
+  return { tryConnection, tryLogin, trySignUp, getTinyJWT }
 }

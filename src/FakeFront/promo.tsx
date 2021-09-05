@@ -1,4 +1,4 @@
-import { Fade, Slide } from '@material-ui/core'
+import { Fade } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
 import React, { ReactElement, useEffect, useState } from 'react'
 
@@ -12,11 +12,6 @@ const useStyles = makeStyles({
     boxShadow: '0 0 20em rgba(255,255,255, 0.3)',
   },
 })
-
-interface PromoItem {
-  direction: 'left' | 'right' | 'up' | 'down' | undefined
-  content: ReactElement
-}
 
 export const Promo = (): ReactElement => {
   const classes = useStyles()

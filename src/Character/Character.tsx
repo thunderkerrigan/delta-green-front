@@ -7,6 +7,7 @@ import {
   Grid,
   makeStyles,
   Paper,
+  Typography,
 } from '@material-ui/core'
 import RefreshIcon from '@material-ui/icons/Refresh'
 import { GeneralInfo } from './elements/GeneralInfo'
@@ -14,6 +15,27 @@ import { SkillsSet } from './elements/Skills'
 import { StatsSet } from './elements/Stats'
 
 const useStyles = makeStyles((theme) => ({
+  '@keyframes popin': {
+    '0%': {
+      opacity: 0,
+      transform: 'scale(5) rotateZ(30deg)',
+      textShadow: '0 0 2em black',
+    },
+    '80%': { opacity: 0.3 },
+    '100%': {
+      opacity: 1,
+      transform: ' scale(1) rotateZ(30deg)',
+    },
+  },
+  topSecret: {
+    color: 'red',
+    fontFamily: 'TopSecret',
+    fontSize: '6em',
+    animationName: '$popin',
+    transform: 'rotateZ(30deg)',
+    animationDuration: '1.2s',
+    animationTimingFunction: 'ease-out',
+  },
   portrait: { width: theme.spacing(10), height: theme.spacing(10) },
   // button: { backgroundColor: '#123738' },
   characterSheet: {
@@ -54,6 +76,9 @@ const Character = (): JSX.Element => {
         >
           Reroll
         </Button>
+        <Typography className={classes.topSecret}>
+          [TOP_SECRET]
+        </Typography>
         <Grid item xs={12}>
           <Divider className={classes.divider} />
         </Grid>

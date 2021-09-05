@@ -26,3 +26,8 @@
     src: url('./Tox\ Typewriter.ttf');
   }
   
+  @font-face {
+    font-family: TopSecret;
+    src: url('./TOPSECRET.ttf');
+  }
+  

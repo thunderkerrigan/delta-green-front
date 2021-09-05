@@ -14,17 +14,16 @@ import {
   makeStyles,
   Paper,
   Slide,
-  Slider,
   Typography,
 } from '@material-ui/core'
 import { TransitionProps } from '@material-ui/core/transitions'
-import React, { useEffect, useState } from 'react'
-import { isUint16Array } from 'util/types'
+import React, { useState } from 'react'
+
 import { Pizza, pizzas } from './pizzas/pizzas'
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
-    children?: React.ReactElement<any, any>
+    children?: React.ReactElement
   },
   ref: React.Ref<unknown>,
 ) {
@@ -68,7 +67,10 @@ interface PizzaCount extends Pizza {
   count: number
 }
 
-export const Command = ({ open, handleClose }: Props) => {
+export const Command = ({
+  open,
+  handleClose,
+}: Props): JSX.Element => {
   const classes = useStyles()
   const [cartItems, setcartItems] = useState<Pizza[]>([])
   const cartCount = cartItems.reduce<PizzaCount[]>(

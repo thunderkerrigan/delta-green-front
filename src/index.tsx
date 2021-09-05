@@ -4,7 +4,7 @@ import './index.css'
 import './Fonts/fonts.css'
 import App from './App/App'
 import reportWebVitals from './reportWebVitals'
-import { StrictMode } from 'react'
+// import { StrictMode } from 'react'
 import { BrowserRouter } from 'react-router-dom'
 import { CssBaseline } from '@material-ui/core'
 import '@fontsource/roboto'
@@ -12,14 +12,15 @@ import { Provider } from 'react-redux'
 import { store } from './redux/store'
 
 ReactDOM.render(
-  <StrictMode>
-    <Provider store={store}>
-      <CssBaseline />
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </Provider>
-  </StrictMode>,
+  // <StrictMode>
+  <Provider store={store}>
+    <CssBaseline />
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </Provider>,
+  // </StrictMode>,
+
   document.getElementById('root'),
 )
 

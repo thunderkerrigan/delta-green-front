@@ -4,8 +4,6 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  makeStyles,
-  Paper,
   Slide,
   Tooltip,
 } from '@material-ui/core'
@@ -16,7 +14,7 @@ import { LocalPizzaRounded } from '@material-ui/icons'
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
-    children?: React.ReactElement<any, any>
+    children?: React.ReactElement
   },
   ref: React.Ref<unknown>,
 ) {
@@ -35,24 +33,6 @@ interface Props {
   open: boolean
   handleClose: () => void
 }
-
-const useStyles = makeStyles({
-  root: {
-    display: 'flex',
-    height: '150px',
-  },
-  details: {
-    display: 'flex',
-    flexDirection: 'column',
-  },
-  content: {
-    flex: '1 0 auto',
-  },
-  cover: {
-    minWidth: 150,
-    boxShadow: 'inset -2px 0 4px black',
-  },
-})
 
 const LocationPin = ({
   text,
@@ -76,7 +56,10 @@ const LocationPin = ({
   </div>
 )
 
-export const Location = ({ open, handleClose }: Props) => {
+export const Location = ({
+  open,
+  handleClose,
+}: Props): JSX.Element => {
   //   const classes = useStyles()
   const defaultProps = {
     center: {
@@ -102,7 +85,7 @@ export const Location = ({ open, handleClose }: Props) => {
         <div style={{ height: '30em', width: '30em' }}>
           <GoogleMapReact
             bootstrapURLKeys={{
-              key: 'AIzaSyB1Mh2tLYYG17iwBk8uSSiBpHQRraTZvn4',
+              key: process.env.REACT_APP_GOOGLE_MAP_API_KEY as string,
             }}
             defaultCenter={defaultProps.center}
             defaultZoom={defaultProps.zoom}
