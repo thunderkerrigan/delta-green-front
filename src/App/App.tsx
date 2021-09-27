@@ -17,6 +17,8 @@ import { FakeFront } from '../FakeFront'
 import { useConnection } from '../services/useConnection'
 import { Article } from '../Article/Article'
 import { v4 as uuidV4 } from 'uuid'
+import Profile from '../Profile/Profile'
+import { useCharacter } from '../services/useCharacter'
 
 // const stuff: DossierInterface = {
 //   codename: 'ITT-4325',
@@ -56,10 +58,17 @@ const theme = createTheme({
 const App = (): ReactElement => {
   const user = useSelector((state: RootState) => state.user)
   const { tryConnection } = useConnection()
-
+  const { getMyCharacters } = useCharacter()
   useEffect(() => {
     tryConnection()
   }, [tryConnection])
+
+  useEffect(() => {
+    if (user.isConnected) {
+      getMyCharacters()
+    }
+  }, [getMyCharacters, user.isConnected])
+
   if (user.isConnected) {
     return (
       <ThemeProvider theme={theme}>
@@ -76,6 +85,12 @@ const App = (): ReactElement => {
             </Route>
             <Route path="/article/:id">
               <Article />
+            </Route>
+            <Route path="/profile">
+              <Profile />
+            </Route>
+            <Route path="/character">
+              <Character />
             </Route>
           </Container>
         </div>

@@ -21,6 +21,9 @@ import NotificationsIcon from '@material-ui/icons/Notifications'
 import MoreIcon from '@material-ui/icons/MoreVert'
 import logoURL from '../Images/logo.png'
 import './AppBar.css'
+import { useHistory } from 'react-router'
+import { Divider } from '@material-ui/core'
+import { useConnection } from '../services/useConnection'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -96,6 +99,8 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const DeltaGreenAppBar = (): JSX.Element => {
   const classes = useStyles()
+  const history = useHistory()
+  const { logout } = useConnection()
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(
     null,
   )
@@ -120,6 +125,15 @@ const DeltaGreenAppBar = (): JSX.Element => {
     handleMobileMenuClose()
   }
 
+  const handleProfile = () => {
+    handleMenuClose()
+    history.push('/profile')
+  }
+  const handleDisconnect = () => {
+    logout()
+    history.push('/')
+  }
+
   const handleMobileMenuOpen = (
     event: React.MouseEvent<HTMLElement>,
   ) => {
@@ -137,8 +151,10 @@ const DeltaGreenAppBar = (): JSX.Element => {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+      <MenuItem onClick={handleProfile}>Profile</MenuItem>
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <Divider />
+      <MenuItem onClick={handleDisconnect}>Sign out</MenuItem>
     </Menu>
   )
 

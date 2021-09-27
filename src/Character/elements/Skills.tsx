@@ -39,7 +39,7 @@ export const SkillsSet = ({
     masterySkills?.map((i) => i?.toString()) || []
   return (
     <Grid
-      style={{ padding: '1em' }}
+      style={{ padding: '1em', margin: '0.2rem', flexGrow: 1 }}
       component={Paper}
       container
       direction="row"
@@ -51,6 +51,7 @@ export const SkillsSet = ({
       sm={6}
       md={4}
       lg={3}
+      xl={3}
     >
       <Grid item>
         <Typography variant="h6" className={classes.categorie}>

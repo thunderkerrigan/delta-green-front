@@ -1,20 +1,17 @@
 import React from 'react'
 import {
-  Button,
   Divider,
   Grid,
   makeStyles,
   Paper,
-  Typography,
+  Tab,
+  Tabs,
 } from '@material-ui/core'
-import RefreshIcon from '@material-ui/icons/Refresh'
-import { GeneralInfo } from './elements/GeneralInfo'
-import { SkillsSet } from './elements/Skills'
-import { StatsSet } from './elements/Stats'
 import { RootState } from '../redux/store'
-import { useSelector } from 'react-redux'
-import { useCharacter } from '../services/useCharacter'
-import { CharacterState } from '../redux/CharacterSlice'
+import { GeneralInfo } from '../Character/elements/GeneralInfo'
+import { useDispatch, useSelector } from 'react-redux'
+import { setSelectedCharacters } from '../redux/UserSlice'
+import { chromeTabsStylesHook } from '@mui-treasury/styles/tabs'
 
 const useStyles = makeStyles((theme) => ({
   '@keyframes popin': {
@@ -48,46 +45,42 @@ const useStyles = makeStyles((theme) => ({
   // divider: { margin: `${theme.spacing(2)}px 0` },
 }))
 
-const Character = (): JSX.Element => {
+const Profile = (): JSX.Element => {
   const classes = useStyles()
-  const character = useSelector(
-    (state: RootState) => state.character as CharacterState,
+  const { charactersList, currentSelectedCharacter } = useSelector(
+    (state: RootState) => state.user,
   )
-  const { getCharacter, addCharacter } = useCharacter()
+  const dispatch = useDispatch()
+  const changeSelectedCharacter = (newIndex: number) =>
+    dispatch(setSelectedCharacters(newIndex))
 
+  const tabsStyles = chromeTabsStylesHook.useTabs()
+  const tabItemStyles = chromeTabsStylesHook.useTabItem()
   return (
     <Paper className={classes.characterSheet}>
+      <Tabs
+        classes={tabsStyles}
+        value={currentSelectedCharacter}
+        onChange={(e, index) => changeSelectedCharacter(index)}
+      >
+        {charactersList.map((character) => {
+          const name = `${character.firstName} ${character.lastName}`
+          return (
+            <Tab key={name} classes={tabItemStyles} label={name} />
+          )
+        })}
+      </Tabs>
       <Grid item container xs>
-        <Button
-          // className={classes.button}
-          startIcon={<RefreshIcon />}
-          variant="contained"
-          color="secondary"
-          onClick={getCharacter}
-        >
-          Reroll
-        </Button>
-        <Button
-          // className={classes.button}
-          startIcon={<RefreshIcon />}
-          variant="contained"
-          color="secondary"
-          onClick={addCharacter}
-        >
-          Select
-        </Button>
-        <Typography className={classes.topSecret}>
-          [TOP_SECRET]
-        </Typography>
-        <Grid item xs={12}>
-          <Divider className={classes.divider} />
-        </Grid>
         <Grid item container spacing={2}>
           <Grid item xs={12} lg>
-            {character && <GeneralInfo {...character} />}
+            {currentSelectedCharacter && (
+              <GeneralInfo
+                {...charactersList[currentSelectedCharacter]}
+              />
+            )}
           </Grid>
           <Grid item xs={12} lg>
-            <StatsSet stats={character?.stats} />
+            {/* <StatsSet stats={character?.stats} /> */}
           </Grid>
           <Grid item xs={12}>
             <Divider className={classes.divider} />
@@ -102,7 +95,7 @@ const Character = (): JSX.Element => {
             // justifyContent="flex-start"
             justifyContent="center"
           >
-            <SkillsSet
+            {/* <SkillsSet
               category={'Connaissance'}
               skills={character?.knowledgeSkills}
               masterySkills={character?.profession.skills}
@@ -132,7 +125,7 @@ const Character = (): JSX.Element => {
               category={'Autres'}
               skills={character?.otherSkills}
               masterySkills={character?.profession.skills}
-            />
+            /> */}
           </Grid>
         </Grid>
       </Grid>
@@ -140,4 +133,4 @@ const Character = (): JSX.Element => {
   )
 }
 
-export default Character
+export default Profile

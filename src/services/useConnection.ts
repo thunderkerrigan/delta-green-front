@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { useMemo } from 'react'
 import { useCookies } from 'react-cookie'
 import { useDispatch } from 'react-redux'
 import { connect, disconnect } from '../redux/UserSlice'
@@ -11,32 +12,38 @@ export const useConnection = (): {
   ) => Promise<null | string>
   trySignUp: (username: string, password: string) => Promise<void>
   getTinyJWT: () => Promise<{ token: string }>
+  logout: () => void
 } => {
   const dispatch = useDispatch()
   const [cookies, setCookie, removeCookie] = useCookies([
     'delta-green.JWT',
   ])
-  const tryConnection = async () => {
-    try {
-      const { data } = await axios.get<boolean>(
-        'http://localhost:33582/login',
-        {
-          headers: {
-            Authorization: `Bearer ${cookies['delta-green.JWT']}`,
+
+  const tryConnection = useMemo(
+    () => async () => {
+      try {
+        const { data } = await axios.get<boolean>(
+          'http://localhost:33582/login',
+          {
+            headers: {
+              Authorization: `Bearer ${cookies['delta-green.JWT']}`,
+            },
           },
-        },
-      )
-      if (data === true) {
-        dispatch(connect())
-      } else {
+        )
+        if (data === true) {
+          dispatch(connect())
+        } else {
+          removeCookie('delta-green.JWT')
+          dispatch(disconnect())
+        }
+      } catch (error) {
         removeCookie('delta-green.JWT')
         dispatch(disconnect())
       }
-    } catch (error) {
-      removeCookie('delta-green.JWT')
-      dispatch(disconnect())
-    }
-  }
+    },
+    [cookies, dispatch, removeCookie],
+  )
+
   const tryLogin = async (
     username: string,
     password: string,
@@ -101,5 +108,10 @@ export const useConnection = (): {
     return { token: '' }
   }
 
-  return { tryConnection, tryLogin, trySignUp, getTinyJWT }
+  const logout = () => {
+    // simply delete cookie and disconnect from redux
+    removeCookie('delta-green.JWT')
+    dispatch(disconnect())
+  }
+  return { tryConnection, tryLogin, trySignUp, getTinyJWT, logout }
 }

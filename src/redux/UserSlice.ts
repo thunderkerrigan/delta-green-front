@@ -1,11 +1,16 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { CharacterModel } from 'delta-green-core/src/models/CharacterModel'
 
 export interface UserState {
   isConnected: boolean
+  charactersList: CharacterModel[]
+  currentSelectedCharacter: number
 }
 
 const initialState: UserState = {
   isConnected: false,
+  charactersList: [],
+  currentSelectedCharacter: -1,
 }
 
 export const userSlice = createSlice({
@@ -13,19 +18,31 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     connect: (state) => {
-      // Redux Toolkit allows us to write "mutating" logic in reducers. It
-      // doesn't actually mutate the state because it uses the Immer library,
-      // which detects changes to a "draft state" and produces a brand new
-      // immutable state based off those changes
       state.isConnected = true
     },
-    disconnect: (state) => {
-      state.isConnected = false
+    disconnect: () => {
+      return initialState
+    },
+    setCharacters: (
+      state,
+      action: PayloadAction<Omit<UserState, 'isConnected'>>,
+    ) => {
+      state.charactersList = action.payload.charactersList
+      state.currentSelectedCharacter =
+        action.payload.currentSelectedCharacter
+    },
+    setSelectedCharacters: (state, action: PayloadAction<number>) => {
+      state.currentSelectedCharacter = action.payload
     },
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { connect, disconnect } = userSlice.actions
+export const {
+  connect,
+  disconnect,
+  setCharacters,
+  setSelectedCharacters,
+} = userSlice.actions
 
 export default userSlice.reducer

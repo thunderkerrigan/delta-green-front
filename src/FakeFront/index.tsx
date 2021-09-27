@@ -61,7 +61,7 @@ const useStyles = makeStyles({
     fontSize: '1.6em',
     fontWeight: 900,
     color: 'white',
-    fontFamily: 'Franklin Gothic',
+    fontFamily: 'roboto',
   },
   glow: { boxShadow: '1em 1em 20em 1.2em #18470f' },
   appBar: {
@@ -104,7 +104,7 @@ const useStyles = makeStyles({
     WebkitTextStrokeColor: 'yellow',
     WebkitTextStrokeWidth: '0.6px',
     fontWeight: 900,
-    fontFamily: 'Franklin Gothic',
+    fontFamily: 'roboto',
     animationName: '$zoom',
     animationDuration: '1.2s',
     animationTimingFunction: 'linear',
@@ -146,7 +146,7 @@ const useStyles = makeStyles({
     WebkitTextStrokeWidth: '0.6px',
     fontWeight: 900,
     transition: 'transform .2s',
-    fontFamily: 'Franklin Gothic',
+    fontFamily: 'roboto',
   },
   cardImage: {
     transition: 'transform .2s',

@@ -20,12 +20,13 @@ import {
 } from '@material-ui/core/colors'
 import { Stat } from 'delta-green-core/src/models/CharacterModel'
 import { Radar } from 'react-chartjs-2'
+import { ChartOptions } from 'chart.js'
 
 const useStyles = makeStyles({
   title: {
     margin: 'auto',
     minWidth: '140px',
-    width: '365px',
+    width: '375px',
     padding: '0 16px',
     fontFamily: 'VeteranTypewriter',
     backgroundColor: '#123718',
@@ -68,8 +69,10 @@ export const StatsSet = ({
   stats?: Record<Stat, number>
 }): JSX.Element => {
   const classes = useStyles()
-
-  const data = stats && {
+  if (!stats) {
+    return <></>
+  }
+  const data = {
     labels: Object.keys(stats),
     datasets: [
       {
@@ -86,9 +89,9 @@ export const StatsSet = ({
     ],
   }
 
-  const config = {
+  const config: ChartOptions = {
     plugins: {
-      legend: false,
+      legend: { display: false },
     },
     maintainAspectRatio: false,
     scales: {
@@ -161,7 +164,7 @@ export const StatsSet = ({
           <Grid container spacing={2} style={{ height: '305px' }}>
             <Grid item xs={12}>
               <Typography variant="h6" className={classes.title}>
-                {"Résultat Préliminaire d'évalution:"}
+                {"Résultat Préliminaire d'évaluation:"}
               </Typography>
             </Grid>
             <Fragment>
@@ -182,7 +185,11 @@ export const StatsSet = ({
           </Grid>
         )}
         {stats === undefined && (
-          <Grid xs={12} style={{ width: '300px', height: '300px' }} />
+          <Grid
+            item
+            xs={12}
+            style={{ width: '300px', height: '300px' }}
+          />
         )}
       </div>
     </Fade>

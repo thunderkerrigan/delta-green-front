@@ -15,7 +15,11 @@ import Flag from 'react-country-flag'
 import { useBarcode } from 'react-barcodes'
 import moment from 'moment'
 import logo from '../../Images/logo.png'
-import ID_background from '../../Images/ID_background4.jpg'
+// import ID_background from '../../Images/ID_background4.jpg'
+import ID_background from '../../Images/ID_background2_2.png'
+// import ID_background from '../../Images/ID_background2.png'
+// import ID_background from '../../Images/ID_background5.jpg'
+// import ID_background from '../../Images/ID_background6.gif'
 import { CSSProperties } from '@material-ui/core/styles/withStyles'
 import RandomWord from '../../utils/RandomWord'
 
@@ -30,6 +34,7 @@ const useStyles = makeStyles((theme) => ({
   },
   idCard: {
     margin: 'auto',
+    overflow: 'hidden',
     // border: '1px solid black',
     borderRadius: '6px',
     boxShadow: ' 2px 2px 6px black',
