@@ -1,6 +1,4 @@
 import React, {
-  FC,
-  ReactElement,
   useCallback,
   useEffect,
   useRef,
@@ -71,9 +69,9 @@ const useRandomWord = ({
         .split('')
         .map((char, i) => randomSequenceFor(word[i]))
     }
-    // if (!animation.current) {
-    animation.current = window.setTimeout(animate, speed)
-    // }
+    if (!animation.current) {
+      animation.current = window.setTimeout(animate, speed)
+    }
     return () => {
       window.clearTimeout(animation.current)
     }

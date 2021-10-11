@@ -17,15 +17,18 @@ const useAsync = <T>(
   const [error, setError] = useState<Error | undefined>()
   const [value, setValue] = useState<T | undefined>()
 
-  const callbackMemoized = useCallback(() => {
+  const callbackMemoized = useCallback(async () => {
     setLoading(true)
     setError(undefined)
     setValue(undefined)
-    callback()
-      .then(setValue)
-      .catch(setError)
-      .finally(() => setLoading(false))
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    try {
+      const result = await callback()
+      setValue(result)
+    } catch (error) {
+      setError(error as Error)
+    } finally {
+      setLoading(false)
+    }
   }, [callback, ...dependencies])
 
   useEffect(() => {

@@ -1,17 +1,48 @@
 import axios from 'axios'
-import { useMemo } from 'react'
+import { useCallback, useMemo } from 'react'
 import { useCookies } from 'react-cookie'
 import { useDispatch } from 'react-redux'
+import useAsync from '../hooks/useAsync'
 import { connect, disconnect } from '../redux/UserSlice'
 
+export const useTryConnection = (): ReturnType<typeof useAsync> => {
+  const dispatch = useDispatch()
+  const [cookies, setCookie, removeCookie] = useCookies([
+    'delta-green.JWT',
+  ])
+  const memoizedRequest = useCallback(async () => {
+    try {
+      const { data } = await axios.get<boolean>(
+        'http://localhost:33582/login',
+        {
+          headers: {
+            Authorization: `Bearer ${cookies['delta-green.JWT']}`,
+          },
+        },
+      )
+      if (data === true) {
+        dispatch(connect())
+      } else {
+        removeCookie('delta-green.JWT')
+        dispatch(disconnect())
+      }
+      return data
+    } catch (error) {
+      removeCookie('delta-green.JWT')
+      dispatch(disconnect())
+      return false
+    }
+  }, [cookies, dispatch, removeCookie])
+  return useAsync<boolean>(memoizedRequest, [])
+}
+
 export const useConnection = (): {
-  tryConnection: () => Promise<void>
+  useTryConnection: () => ReturnType<typeof useAsync>
   tryLogin: (
     username: string,
     password: string,
   ) => Promise<null | string>
   trySignUp: (username: string, password: string) => Promise<void>
-  getTinyJWT: () => Promise<{ token: string }>
   logout: () => void
 } => {
   const dispatch = useDispatch()
@@ -19,8 +50,8 @@ export const useConnection = (): {
     'delta-green.JWT',
   ])
 
-  const tryConnection = useMemo(
-    () => async () => {
+  const useTryConnection = () =>
+    useAsync<boolean>(async () => {
       try {
         const { data } = await axios.get<boolean>(
           'http://localhost:33582/login',
@@ -36,13 +67,13 @@ export const useConnection = (): {
           removeCookie('delta-green.JWT')
           dispatch(disconnect())
         }
+        return data
       } catch (error) {
         removeCookie('delta-green.JWT')
         dispatch(disconnect())
+        return false
       }
-    },
-    [cookies, dispatch, removeCookie],
-  )
+    }, [dispatch])
 
   const tryLogin = async (
     username: string,
@@ -93,25 +124,11 @@ export const useConnection = (): {
       dispatch(disconnect())
     }
   }
-  const getTinyJWT = async () => {
-    const { data } = await axios.get<string>(
-      'http://localhost:33582/login/tiny',
-      {
-        headers: {
-          Authorization: `Bearer ${cookies['delta-green.JWT']}`,
-        },
-      },
-    )
-    if (data != '') {
-      return { token: data }
-    }
-    return { token: '' }
-  }
 
   const logout = () => {
     // simply delete cookie and disconnect from redux
     removeCookie('delta-green.JWT')
     dispatch(disconnect())
   }
-  return { tryConnection, tryLogin, trySignUp, getTinyJWT, logout }
+  return { useTryConnection, tryLogin, trySignUp, logout }
 }

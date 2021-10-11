@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { StrictMode } from 'react'
 import ReactDOM from 'react-dom'
 import './index.css'
 import './Fonts/fonts.css'
@@ -10,18 +10,25 @@ import { CssBaseline } from '@material-ui/core'
 import '@fontsource/roboto'
 import { Provider } from 'react-redux'
 import { store } from './redux/store'
+import LoadingScreen, {
+  WebGLCanvas,
+} from './LoadingScreen/LoadingScreen'
+import { WebGLProvider } from './LoadingScreen/context'
+
+const rootElement = document.getElementById('root')
 
 ReactDOM.render(
-  // <StrictMode>
-  <Provider store={store}>
-    <CssBaseline />
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  </Provider>,
-  // </StrictMode>,
-
-  document.getElementById('root'),
+  <WebGLProvider>
+    <WebGLCanvas />
+    <Provider store={store}>
+      <CssBaseline />
+      <BrowserRouter>
+        <App />
+        {/* <LoadingScreen /> */}
+      </BrowserRouter>
+    </Provider>
+  </WebGLProvider>,
+  rootElement,
 )
 
 // If you want to start measuring performance in your app, pass a function

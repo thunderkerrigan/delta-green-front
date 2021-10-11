@@ -57,28 +57,30 @@ const Character = (): JSX.Element => {
 
   return (
     <Paper className={classes.characterSheet}>
-      <Grid item container xs>
-        <Button
-          // className={classes.button}
-          startIcon={<RefreshIcon />}
-          variant="contained"
-          color="secondary"
-          onClick={getCharacter}
-        >
-          Reroll
-        </Button>
-        <Button
-          // className={classes.button}
-          startIcon={<RefreshIcon />}
-          variant="contained"
-          color="secondary"
-          onClick={addCharacter}
-        >
-          Select
-        </Button>
-        <Typography className={classes.topSecret}>
-          [TOP_SECRET]
-        </Typography>
+      <Grid item container xs spacing={1}>
+        <Grid item>
+          <Button
+            // className={classes.button}
+            startIcon={<RefreshIcon />}
+            variant="contained"
+            color="secondary"
+            onClick={getCharacter}
+          >
+            Reroll
+          </Button>
+        </Grid>
+        <Grid item>
+          <Button
+            // className={classes.button}
+            startIcon={<RefreshIcon />}
+            variant="contained"
+            color="secondary"
+            onClick={addCharacter}
+          >
+            Select
+          </Button>
+        </Grid>
+
         <Grid item xs={12}>
           <Divider className={classes.divider} />
         </Grid>

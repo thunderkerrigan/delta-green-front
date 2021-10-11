@@ -45,6 +45,7 @@ import { Menu } from './menu'
 import { Location } from './Location'
 import { Command } from './Command'
 import { Connect } from './connect'
+import { CreateAccount } from './CreateAccount'
 import { RootState } from '../redux/store'
 
 const useStyles = makeStyles({
@@ -171,16 +172,17 @@ export const FakeFront: FC = (): ReactElement => {
   const [showLogin, setShowLogin] = useState(false)
   const [showLocation, setShowLocation] = useState(false)
   const [showCommand, setShowCommand] = useState(false)
+  const [showCreateAccount, setShowCreateAccount] = useState(false)
   const [currentIndex, setCurrentIndex] = useState(0)
   const isConnected = useSelector(
     (state: RootState) => state.user.isConnected,
   )
 
-  useEffect(() => {
-    if (!isConnected !== showLogin) {
-      setShowLogin(!isConnected)
-    }
-  }, [isConnected, showLogin])
+  // useEffect(() => {
+  //   if (!isConnected !== showLogin) {
+  //     setShowLogin(!isConnected)
+  //   }
+  // }, [isConnected, showLogin])
   return (
     <div>
       {tos({
@@ -192,9 +194,21 @@ export const FakeFront: FC = (): ReactElement => {
         open={showLogin}
         handleClose={() => setShowLogin(false)}
       />
+      <CreateAccount
+        open={showCreateAccount}
+        handleClose={() => setShowCreateAccount(false)}
+      />
       <Command
         open={showCommand}
         handleClose={() => setShowCommand(false)}
+        handleSignIn={() => {
+          setShowCommand(false)
+          setShowLogin(true)
+        }}
+        handleSignUp={() => {
+          setShowCommand(false)
+          setShowCreateAccount(true)
+        }}
       />
       <Location
         open={showLocation}

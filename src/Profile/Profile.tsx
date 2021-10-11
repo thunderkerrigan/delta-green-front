@@ -12,6 +12,8 @@ import { GeneralInfo } from '../Character/elements/GeneralInfo'
 import { useDispatch, useSelector } from 'react-redux'
 import { setSelectedCharacters } from '../redux/UserSlice'
 import { chromeTabsStylesHook } from '@mui-treasury/styles/tabs'
+import { SkillsSet } from '../Character/elements/Skills'
+import { StatsSet } from '../Character/elements/Stats'
 
 const useStyles = makeStyles((theme) => ({
   '@keyframes popin': {
@@ -56,6 +58,10 @@ const Profile = (): JSX.Element => {
 
   const tabsStyles = chromeTabsStylesHook.useTabs()
   const tabItemStyles = chromeTabsStylesHook.useTabItem()
+  const character = charactersList[currentSelectedCharacter]
+  if (!character) {
+    return <></>
+  }
   return (
     <Paper className={classes.characterSheet}>
       <Tabs
@@ -73,14 +79,10 @@ const Profile = (): JSX.Element => {
       <Grid item container xs>
         <Grid item container spacing={2}>
           <Grid item xs={12} lg>
-            {currentSelectedCharacter && (
-              <GeneralInfo
-                {...charactersList[currentSelectedCharacter]}
-              />
-            )}
+            <GeneralInfo {...character} />
           </Grid>
           <Grid item xs={12} lg>
-            {/* <StatsSet stats={character?.stats} /> */}
+            <StatsSet stats={character.stats} />
           </Grid>
           <Grid item xs={12}>
             <Divider className={classes.divider} />
@@ -95,37 +97,37 @@ const Profile = (): JSX.Element => {
             // justifyContent="flex-start"
             justifyContent="center"
           >
-            {/* <SkillsSet
+            <SkillsSet
               category={'Connaissance'}
-              skills={character?.knowledgeSkills}
-              masterySkills={character?.profession.skills}
+              skills={character.knowledgeSkills}
+              masterySkills={character.profession.skills}
             />
             <SkillsSet
               category={'Expertise'}
-              skills={character?.expertiseSkills}
-              masterySkills={character?.profession.skills}
+              skills={character.expertiseSkills}
+              masterySkills={character.profession.skills}
             />
             <SkillsSet
               category={'Sens'}
-              skills={character?.sensorialSkills}
-              masterySkills={character?.profession.skills}
+              skills={character.sensorialSkills}
+              masterySkills={character.profession.skills}
             />
             <SkillsSet
               category={'Influence'}
-              skills={character?.influenceSkills}
-              masterySkills={character?.profession.skills}
+              skills={character.influenceSkills}
+              masterySkills={character.profession.skills}
             />
 
             <SkillsSet
               category={'Action'}
-              skills={character?.actionSkills}
-              masterySkills={character?.profession.skills}
+              skills={character.actionSkills}
+              masterySkills={character.profession.skills}
             />
             <SkillsSet
               category={'Autres'}
-              skills={character?.otherSkills}
-              masterySkills={character?.profession.skills}
-            /> */}
+              skills={character.otherSkills}
+              masterySkills={character.profession.skills}
+            />
           </Grid>
         </Grid>
       </Grid>

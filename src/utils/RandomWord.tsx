@@ -21,16 +21,23 @@ const RandomWord: FC<Props> = ({
   word,
 }: Props): ReactElement => {
   const [currentRound, setCurrentRound] = useState(0)
-  const _letters = useRef<string[][]>()
+  const _letters = useRef<string[][] | undefined>()
+  const _currentWord = useRef<string | undefined>()
 
   const animate = useCallback(() => {
     const nextRound = currentRound + 1
+    if (_currentWord.current != word) {
+      _letters.current = undefined
+      setCurrentRound(0)
+      return
+    }
     if (nextRound >= rounds) {
+      _letters.current = undefined
       return
     }
     setCurrentRound(nextRound)
     animation.current = window.setTimeout(animate, speed)
-  }, [currentRound, rounds, speed])
+  }, [currentRound, rounds, speed, word])
 
   const animation = useRef<number>()
   useEffect(() => {
@@ -56,7 +63,11 @@ const RandomWord: FC<Props> = ({
         })
         .concat(letter)
     }
-    if (!_letters.current) {
+    if (
+      _letters.current == undefined &&
+      _currentWord.current != word
+    ) {
+      _currentWord.current = word
       _letters.current = word
         .split('')
         .map((char, i) => randomSequenceFor(word[i]))
@@ -66,6 +77,11 @@ const RandomWord: FC<Props> = ({
     // }
     return () => {
       window.clearTimeout(animation.current)
+
+      if (!_letters.current) {
+        setCurrentRound(0)
+        _currentWord.current = undefined
+      }
     }
   }, [animate, letters, rounds, speed, word])
 

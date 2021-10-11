@@ -40,6 +40,8 @@ const Transition = React.forwardRef(function Transition(
 
 interface Props {
   open: boolean
+  handleSignIn: () => void
+  handleSignUp: () => void
   handleClose: () => void
 }
 
@@ -47,6 +49,9 @@ const useStyles = makeStyles({
   root: {
     display: 'flex',
     height: '150px',
+  },
+  actions: {
+    width: '300px',
   },
   details: {
     display: 'flex',
@@ -69,6 +74,8 @@ interface PizzaCount extends Pizza {
 
 export const Command = ({
   open,
+  handleSignIn,
+  handleSignUp,
   handleClose,
 }: Props): JSX.Element => {
   const classes = useStyles()
@@ -87,6 +94,13 @@ export const Command = ({
     },
     [],
   )
+
+  const totalCount = `${cartCount
+    .map((i) => i.count * i.price)
+    .reduce(
+      (sum, item) => parseFloat((sum += item).toFixed(2)),
+      0,
+    )} $`
 
   return (
     <Dialog
@@ -124,7 +138,7 @@ export const Command = ({
                         <Typography variant="caption">
                           {i.ingredients.join(', ')}
                         </Typography>
-                        <Typography>{i.price}</Typography>
+                        <Typography>{`${i.price} $`}</Typography>
                       </CardContent>
                     </div>
                   </CardActionArea>
@@ -185,15 +199,7 @@ export const Command = ({
                   >
                     Total
                   </Typography>
-                  <Typography align="right">
-                    {cartCount
-                      .map((i) => i.count * i.price)
-                      .reduce(
-                        (sum, item) =>
-                          parseFloat((sum += item).toFixed(2)),
-                        0,
-                      )}
-                  </Typography>
+                  <Typography align="right">{totalCount}</Typography>
                 </Grid>
               </Paper>
             </Grow>
@@ -201,13 +207,34 @@ export const Command = ({
         </Grid>
       </DialogContent>
       <DialogActions>
-        <Button
-          variant="contained"
-          onClick={handleClose}
-          color="primary"
+        <Grid
+          className={classes.actions}
+          direction="column"
+          spacing={1}
+          container
+          justifyContent="flex-end"
+          alignItems="flex-end"
         >
-          Payer
-        </Button>
+          <Grid item xs={12}>
+            <Typography variant="caption">
+              Merci de vous connecter pour passer commande
+            </Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <Button
+              variant="contained"
+              onClick={handleSignIn}
+              color="primary"
+            >
+              Se connecter
+            </Button>
+          </Grid>
+          <Grid item xs={12}>
+            <Button onClick={handleSignUp} color="primary">
+              Pas encore client ?
+            </Button>
+          </Grid>
+        </Grid>
       </DialogActions>
     </Dialog>
   )

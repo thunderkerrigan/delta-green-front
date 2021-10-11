@@ -1,4 +1,9 @@
-import React, { ReactElement, useEffect } from 'react'
+import React, {
+  ReactElement,
+  useCallback,
+  useEffect,
+  useMemo,
+} from 'react'
 import './App.css'
 import DeltaGreenAppBar from '../AppBar/AppBar'
 import { Redirect, Route } from 'react-router'
@@ -14,11 +19,12 @@ import { green } from '@material-ui/core/colors'
 import { RootState } from '../redux/store'
 import { useSelector } from 'react-redux'
 import { FakeFront } from '../FakeFront'
-import { useConnection } from '../services/useConnection'
+import { useTryConnection } from '../services/useConnection'
 import { Article } from '../Article/Article'
 import { v4 as uuidV4 } from 'uuid'
 import Profile from '../Profile/Profile'
 import { useCharacter } from '../services/useCharacter'
+import splashscreenURL from '../Images/splashscreen.gif'
 
 // const stuff: DossierInterface = {
 //   codename: 'ITT-4325',
@@ -57,17 +63,33 @@ const theme = createTheme({
 
 const App = (): ReactElement => {
   const user = useSelector((state: RootState) => state.user)
-  const { tryConnection } = useConnection()
   const { getMyCharacters } = useCharacter()
-  useEffect(() => {
-    tryConnection()
-  }, [tryConnection])
+  const { loading: waiting } = useTryConnection()
 
   useEffect(() => {
     if (user.isConnected) {
       getMyCharacters()
     }
   }, [getMyCharacters, user.isConnected])
+  if (waiting) {
+    return (
+      <div
+        style={{
+          width: '100vw',
+          height: '100vh',
+          overflow: 'hidden',
+        }}
+      >
+        <img
+          style={{
+            width: '100vw',
+            height: 'auto',
+          }}
+          src={splashscreenURL}
+        />
+      </div>
+    )
+  }
 
   if (user.isConnected) {
     return (
