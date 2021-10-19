@@ -6,15 +6,15 @@ import {
   DialogTitle,
   Slide,
   Tooltip,
-} from '@material-ui/core'
-import { TransitionProps } from '@material-ui/core/transitions'
+} from '@mui/material'
+import { TransitionProps } from '@mui/material/transitions'
 import React, { ReactElement } from 'react'
 import GoogleMapReact, { ChildComponentProps } from 'google-map-react'
-import { LocalPizzaRounded } from '@material-ui/icons'
+import { LocalPizzaRounded } from '@mui/icons-material'
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
-    children?: React.ReactElement
+    children: React.ReactElement
   },
   ref: React.Ref<unknown>,
 ) {

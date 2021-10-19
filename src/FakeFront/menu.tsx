@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   Card,
   CardContent,
@@ -8,17 +9,16 @@ import {
   DialogContent,
   DialogTitle,
   Grid,
-  makeStyles,
   Slide,
   Typography,
-} from '@material-ui/core'
-import { TransitionProps } from '@material-ui/core/transitions'
+} from '@mui/material'
+import { TransitionProps } from '@mui/material/transitions'
 import React from 'react'
 import { pizzas } from './pizzas/pizzas'
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
-    children?: React.ReactElement
+    children: React.ReactElement
   },
   ref: React.Ref<unknown>,
 ) {
@@ -30,26 +30,7 @@ interface Props {
   handleClose: () => void
 }
 
-const useStyles = makeStyles({
-  root: {
-    display: 'flex',
-    height: '150px',
-  },
-  details: {
-    display: 'flex',
-    flexDirection: 'column',
-  },
-  content: {
-    flex: '1 0 auto',
-  },
-  cover: {
-    minWidth: 150,
-    boxShadow: 'inset -2px 0 4px black',
-  },
-})
-
 export const Menu = ({ open, handleClose }: Props): JSX.Element => {
-  const classes = useStyles()
   return (
     <Dialog
       maxWidth="md"
@@ -67,21 +48,38 @@ export const Menu = ({ open, handleClose }: Props): JSX.Element => {
         <Grid container spacing={2}>
           {pizzas.map((i) => (
             <Grid item key={i.name} xs={6}>
-              <Card className={classes.root}>
+              <Card
+                sx={{
+                  display: 'flex',
+                  height: '150px',
+                }}
+              >
                 <CardMedia
-                  className={classes.cover}
+                  sx={{
+                    minWidth: 150,
+                    boxShadow: 'inset -2px 0 4px black',
+                  }}
                   title={i.imageURL}
                   image={i.imageURL}
                 />
-                <div className={classes.details}>
-                  <CardContent className={classes.content}>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                  }}
+                >
+                  <CardContent
+                    sx={{
+                      flex: '1 0 auto',
+                    }}
+                  >
                     <Typography variant="h5">{i.name}</Typography>
                     <Typography variant="caption">
                       {i.ingredients.join(', ')}
                     </Typography>
                     <Typography>{i.price}</Typography>
                   </CardContent>
-                </div>
+                </Box>
               </Card>
             </Grid>
           ))}

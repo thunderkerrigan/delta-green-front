@@ -4,10 +4,9 @@ import {
   Avatar,
   Fade,
   Grid,
-  makeStyles,
   Tooltip,
   Typography,
-} from '@material-ui/core'
+} from '@mui/material'
 import {
   deepOrange,
   amber,
@@ -17,31 +16,10 @@ import {
   green,
   red,
   grey,
-} from '@material-ui/core/colors'
+} from '@mui/material/colors'
 import { Stat } from 'delta-green-core/src/models/CharacterModel'
 import { Radar } from 'react-chartjs-2'
 import { ChartOptions } from 'chart.js'
-
-const useStyles = makeStyles({
-  title: {
-    margin: 'auto',
-    minWidth: '140px',
-    width: '375px',
-    padding: '0 16px',
-    fontFamily: 'VeteranTypewriter',
-    backgroundColor: '#123718',
-    color: 'white',
-    borderRadius: '4px',
-    boxShadow: '5px 5px 5px black',
-  },
-  statTitle: { textDecorationLine: 'underline', fontWeight: 900 },
-  statPercentage: {
-    backgroundColor: grey[300],
-    borderRadius: '4px',
-    padding: '2px',
-  },
-  // statItem: { border: '1px solid grey' },
-})
 
 const statScoreColor = (
   score: number,
@@ -68,7 +46,6 @@ export const StatsSet = ({
 }: {
   stats?: Record<Stat, number>
 }): JSX.Element => {
-  const classes = useStyles()
   if (!stats) {
     return <></>
   }
@@ -89,7 +66,7 @@ export const StatsSet = ({
     ],
   }
 
-  const config: ChartOptions = {
+  const config: ChartOptions<'radar'> = {
     plugins: {
       legend: { display: false },
     },
@@ -133,7 +110,10 @@ export const StatsSet = ({
               placement="left-start"
             >
               <Typography
-                className={classes.statTitle}
+                sx={{
+                  textDecorationLine: 'underline',
+                  fontWeight: 900,
+                }}
                 align="left"
               >{`${stat.slice(0, 3)}:`}</Typography>
             </Tooltip>
@@ -151,7 +131,11 @@ export const StatsSet = ({
           </Grid>
           <Grid item xs>
             <Typography
-              className={classes.statPercentage}
+              sx={{
+                backgroundColor: grey[300],
+                borderRadius: '4px',
+                padding: '2px',
+              }}
             >{`${percentage} %`}</Typography>
           </Grid>
         </Grid>
@@ -163,7 +147,20 @@ export const StatsSet = ({
         {stats && (
           <Grid container spacing={2} style={{ height: '305px' }}>
             <Grid item xs={12}>
-              <Typography variant="h6" className={classes.title}>
+              <Typography
+                variant="h6"
+                sx={{
+                  margin: 'auto',
+                  minWidth: '140px',
+                  width: '375px',
+                  padding: '0 16px',
+                  fontFamily: 'VeteranTypewriter',
+                  backgroundColor: '#123718',
+                  color: 'white',
+                  borderRadius: '4px',
+                  boxShadow: '5px 5px 5px black',
+                }}
+              >
                 {"Résultat Préliminaire d'évaluation:"}
               </Typography>
             </Grid>

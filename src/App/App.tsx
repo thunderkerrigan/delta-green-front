@@ -1,9 +1,4 @@
-import React, {
-  ReactElement,
-  useCallback,
-  useEffect,
-  useMemo,
-} from 'react'
+import React, { ReactElement } from 'react'
 import './App.css'
 import DeltaGreenAppBar from '../AppBar/AppBar'
 import { Redirect, Route } from 'react-router'
@@ -14,8 +9,8 @@ import {
   Toolbar,
   ThemeProvider,
   createTheme,
-} from '@material-ui/core'
-import { green } from '@material-ui/core/colors'
+} from '@mui/material'
+import { green } from '@mui/material/colors'
 import { RootState } from '../redux/store'
 import { useSelector } from 'react-redux'
 import { FakeFront } from '../FakeFront'
@@ -37,41 +32,19 @@ import splashscreenURL from '../Images/splashscreen.gif'
 
 const fakeTheme = createTheme({
   palette: { primary: green },
-  overrides: {
-    MuiCssBaseline: {
-      '@global': {
-        html: {
-          WebkitFontSmoothing: 'auto',
-        },
-      },
-    },
-  },
 })
+
 const theme = createTheme({
   palette: { secondary: green },
-
-  overrides: {
-    MuiCssBaseline: {
-      '@global': {
-        html: {
-          WebkitFontSmoothing: 'auto',
-        },
-      },
-    },
-  },
 })
 
 const App = (): ReactElement => {
   const user = useSelector((state: RootState) => state.user)
-  const { getMyCharacters } = useCharacter()
+  const { useGetMyCharacters } = useCharacter()
   const { loading: waiting } = useTryConnection()
 
-  useEffect(() => {
-    if (user.isConnected) {
-      getMyCharacters()
-    }
-  }, [getMyCharacters, user.isConnected])
-  if (waiting) {
+  const { loading } = useGetMyCharacters()
+  if (waiting || loading) {
     return (
       <div
         style={{

@@ -1,33 +1,27 @@
-import React, { StrictMode } from 'react'
+import React from 'react'
 import ReactDOM from 'react-dom'
 import './index.css'
 import './Fonts/fonts.css'
 import App from './App/App'
 import reportWebVitals from './reportWebVitals'
-// import { StrictMode } from 'react'
 import { BrowserRouter } from 'react-router-dom'
-import { CssBaseline } from '@material-ui/core'
-import '@fontsource/roboto'
+import { CssBaseline } from '@mui/material'
+import '@fontsource/roboto/300.css'
+import '@fontsource/roboto/400.css'
+import '@fontsource/roboto/500.css'
+import '@fontsource/roboto/700.css'
 import { Provider } from 'react-redux'
 import { store } from './redux/store'
-import LoadingScreen, {
-  WebGLCanvas,
-} from './LoadingScreen/LoadingScreen'
-import { WebGLProvider } from './LoadingScreen/context'
 
 const rootElement = document.getElementById('root')
 
 ReactDOM.render(
-  <WebGLProvider>
-    <WebGLCanvas />
-    <Provider store={store}>
-      <CssBaseline />
-      <BrowserRouter>
-        <App />
-        {/* <LoadingScreen /> */}
-      </BrowserRouter>
-    </Provider>
-  </WebGLProvider>,
+  <Provider store={store}>
+    <CssBaseline />
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </Provider>,
   rootElement,
 )
 

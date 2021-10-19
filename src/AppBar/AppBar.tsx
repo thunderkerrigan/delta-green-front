@@ -1,104 +1,29 @@
 import React from 'react'
+
 import {
-  makeStyles,
-  Theme,
-  createStyles,
-  alpha,
-} from '@material-ui/core/styles'
-import AppBar from '@material-ui/core/AppBar'
-import Toolbar from '@material-ui/core/Toolbar'
-import IconButton from '@material-ui/core/IconButton'
-import Typography from '@material-ui/core/Typography'
-import InputBase from '@material-ui/core/InputBase'
-import Badge from '@material-ui/core/Badge'
-import MenuItem from '@material-ui/core/MenuItem'
-import Menu from '@material-ui/core/Menu'
-import MenuIcon from '@material-ui/icons/Menu'
-import SearchIcon from '@material-ui/icons/Search'
-import AccountCircle from '@material-ui/icons/AccountCircle'
-import MailIcon from '@material-ui/icons/Mail'
-import NotificationsIcon from '@material-ui/icons/Notifications'
-import MoreIcon from '@material-ui/icons/MoreVert'
+  Mail as MailIcon,
+  Notifications as NotificationsIcon,
+  MoreVert as MoreIcon,
+  AccountCircle,
+} from '@mui/icons-material'
 import logoURL from '../Images/logo.png'
 import './AppBar.css'
 import { useHistory } from 'react-router'
-import { Divider } from '@material-ui/core'
 import { useConnection } from '../services/useConnection'
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    grow: {
-      flexGrow: 1,
-    },
-    appBar: {
-      backgroundColor: '#123718',
-      fontFamily: 'VeteranTypewriter',
-    },
-    menuButton: {
-      marginRight: theme.spacing(2),
-    },
-    title: {
-      display: 'none',
-      [theme.breakpoints.up('sm')]: {
-        display: 'block',
-      },
-      fontFamily: 'VeteranTypewriter',
-      color: 'white',
-    },
-    search: {
-      position: 'relative',
-      borderRadius: theme.shape.borderRadius,
-      backgroundColor: alpha(theme.palette.common.white, 0.15),
-      '&:hover': {
-        backgroundColor: alpha(theme.palette.common.white, 0.25),
-      },
-      marginRight: theme.spacing(2),
-      marginLeft: 0,
-      width: '100%',
-      [theme.breakpoints.up('sm')]: {
-        marginLeft: theme.spacing(3),
-        width: 'auto',
-      },
-    },
-    searchIcon: {
-      padding: theme.spacing(0, 2),
-      height: '100%',
-      position: 'absolute',
-      pointerEvents: 'none',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-    inputRoot: {
-      color: 'inherit',
-    },
-    inputInput: {
-      padding: theme.spacing(1, 1, 1, 0),
-      // vertical padding + font size from searchIcon
-      paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
-      transition: theme.transitions.create('width'),
-      width: '100%',
-      [theme.breakpoints.up('md')]: {
-        width: '20ch',
-      },
-    },
-    sectionDesktop: {
-      display: 'none',
-      [theme.breakpoints.up('md')]: {
-        display: 'flex',
-      },
-    },
-    sectionMobile: {
-      display: 'flex',
-      [theme.breakpoints.up('md')]: {
-        display: 'none',
-      },
-    },
-  }),
-)
+import {
+  AppBar,
+  Badge,
+  Box,
+  Divider,
+  IconButton,
+  Menu,
+  MenuItem,
+  Toolbar,
+  Typography,
+} from '@mui/material'
 
 const DeltaGreenAppBar = (): JSX.Element => {
-  const classes = useStyles()
+  // const classes = useStyles()
   const history = useHistory()
   const { logout } = useConnection()
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(
@@ -203,66 +128,36 @@ const DeltaGreenAppBar = (): JSX.Element => {
   )
 
   return (
-    <div className={classes.grow}>
-      <AppBar className={classes.appBar} position="static">
+    <Box sx={{ flexGrow: 1 }}>
+      <AppBar
+        position="static"
+        sx={{
+          backgroundColor: '#123718',
+          fontFamily: 'VeteranTypewriter',
+        }}
+      >
         <Toolbar>
-          <IconButton
-            edge="start"
-            className={classes.menuButton}
-            color="inherit"
-            aria-label="open drawer"
-          >
-            <MenuIcon />
-          </IconButton>
           <img
             className="AppBar-logo"
             alt="delta green logo"
             src={logoURL}
           />
-          <Typography className={classes.title} variant="h6" noWrap>
-            Delta Green
+          <Typography
+            variant="h6"
+            noWrap
+            component="div"
+            sx={{
+              fontFamily: 'ToxTypewriter',
+              fontSize: '2em',
+              display: { xs: 'none', sm: 'block' },
+            }}
+          >
+            DELTA GREEN
           </Typography>
-          <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
-            </div>
-            <InputBase
-              placeholder="Search…"
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-              inputProps={{ 'aria-label': 'search' }}
-            />
-          </div>
-          <div className={classes.grow} />
-          <div className={classes.sectionDesktop}>
-            <IconButton aria-label="show 4 new mails" color="inherit">
-              <Badge badgeContent={4} color="secondary">
-                <MailIcon />
-              </Badge>
-            </IconButton>
+          <Box sx={{ flexGrow: 1 }} />
+          <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
             <IconButton
-              aria-label="show 17 new notifications"
-              color="inherit"
-            >
-              <Badge badgeContent={17} color="secondary">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
-            <IconButton
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="inherit"
-            >
-              <AccountCircle />
-            </IconButton>
-          </div>
-          <div className={classes.sectionMobile}>
-            <IconButton
+              size="large"
               aria-label="show more"
               aria-controls={mobileMenuId}
               aria-haspopup="true"
@@ -271,12 +166,12 @@ const DeltaGreenAppBar = (): JSX.Element => {
             >
               <MoreIcon />
             </IconButton>
-          </div>
+          </Box>
         </Toolbar>
       </AppBar>
       {renderMobileMenu}
       {renderMenu}
-    </div>
+    </Box>
   )
 }
 

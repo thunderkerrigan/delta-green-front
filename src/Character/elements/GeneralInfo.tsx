@@ -3,10 +3,10 @@ import {
   Grid,
   Typography,
   Avatar,
-  makeStyles,
   Tooltip,
-} from '@material-ui/core'
-import { Skeleton } from '@material-ui/lab'
+  styled,
+} from '@mui/material'
+import { Skeleton } from '@mui/lab'
 import {
   CharacterModel,
   ClearanceLevel,
@@ -20,52 +20,8 @@ import ID_background from '../../Images/ID_background2_2.png'
 // import ID_background from '../../Images/ID_background2.png'
 // import ID_background from '../../Images/ID_background5.jpg'
 // import ID_background from '../../Images/ID_background6.gif'
-import { CSSProperties } from '@material-ui/core/styles/withStyles'
 import RandomWord from '../../utils/RandomWord'
-
-const useStyles = makeStyles((theme) => ({
-  portrait: { width: theme.spacing(10), height: theme.spacing(10) },
-  characterSheet: {
-    padding: theme.spacing(3),
-  },
-  characterLineInfo: {
-    // backgroundColor: 'white',
-    fontWeight: 'bold',
-  },
-  idCard: {
-    margin: 'auto',
-    overflow: 'hidden',
-    // border: '1px solid black',
-    borderRadius: '6px',
-    boxShadow: ' 2px 2px 6px black',
-
-    backgroundImage: `url(${ID_background})`,
-    backgroundSize: 'cover',
-    height: '303px',
-    width: '500px',
-  },
-  dgHeader: {
-    marginTop: theme.spacing(2),
-    backgroundColor: '#123718',
-    height: '52px',
-  },
-  dgTitle: {
-    fontFamily: 'VeteranTypewriter',
-    color: 'white',
-  },
-  dgLogo: {
-    marginRight: theme.spacing(1),
-    width: theme.spacing(4.5),
-    height: theme.spacing(4.5),
-  },
-  clearance: {
-    width: theme.spacing(12),
-    height: theme.spacing(12),
-    fontSize: theme.spacing(9),
-    fontWeight: 'bold',
-    border: `${theme.spacing(1.2)}px solid`,
-  },
-}))
+import { CSSProperties } from '@mui/material/styles/createMixins'
 
 const clearanceStyles: Record<ClearanceLevel, CSSProperties> = {
   0: {
@@ -114,27 +70,30 @@ const UserBarCode = ({ value = 'bonjour' }: { value?: string }) => {
   return <svg ref={inputRef} />
 }
 
+const ClearanceAvatar = styled(Avatar)(({ theme }) => ({
+  height: theme.spacing(12),
+  width: theme.spacing(12),
+  fontSize: theme.spacing(9),
+  fontWeight: 'bold',
+  border: '10px solid',
+  marginRight: theme.spacing(2),
+}))
+
 const Clearance = ({
   clearanceLevel = 0,
 }: {
   clearanceLevel?: ClearanceLevel
 }): JSX.Element => {
-  const classes = useStyles()
-
   return (
-    <Avatar
-      style={clearanceStyles[clearanceLevel]}
-      className={classes.clearance}
-    >
+    <ClearanceAvatar style={clearanceStyles[clearanceLevel]}>
       {clearanceLevel}
-    </Avatar>
+    </ClearanceAvatar>
   )
 }
 
 export const GeneralInfo = (
   character: Partial<CharacterModel>,
 ): JSX.Element => {
-  const classes = useStyles()
   const {
     portrait,
     firstName,
@@ -152,9 +111,19 @@ export const GeneralInfo = (
   if (Object.keys(character).length > 0) {
     return (
       <Grid
-        className={classes.idCard}
+        sx={{
+          margin: 'auto',
+          overflow: 'hidden',
+          borderRadius: '6px',
+          boxShadow: ' 2px 2px 6px black',
+
+          backgroundImage: `url(${ID_background})`,
+          backgroundSize: 'cover',
+          height: '303px',
+          width: '500px',
+        }}
         container
-        spacing={2}
+        spacing={1.5}
         justifyContent="center"
       >
         <Grid
@@ -162,10 +131,29 @@ export const GeneralInfo = (
           alignItems="center"
           container
           xs={12}
-          className={classes.dgHeader}
+          sx={{
+            marginTop: '16px',
+            backgroundColor: '#123718',
+            height: '52px',
+          }}
         >
-          <img src={logo} className={classes.dgLogo} />
-          <Typography variant="h6" className={classes.dgTitle}>
+          <img
+            src={logo}
+            style={{
+              marginTop: '-8px',
+              marginRight: '8px',
+              width: '36px',
+              height: '36px',
+            }}
+          />
+          <Typography
+            variant="h6"
+            sx={{
+              marginTop: '-8px',
+              fontFamily: 'VeteranTypewriter',
+              color: 'white',
+            }}
+          >
             DELTA GREEN AGENT
           </Typography>
         </Grid>
@@ -180,7 +168,7 @@ export const GeneralInfo = (
           <Grid item xs>
             <Avatar
               variant="rounded"
-              className={classes.portrait}
+              sx={{ width: '80px', height: '80px' }}
               src={portrait}
             />
           </Grid>
@@ -201,7 +189,7 @@ export const GeneralInfo = (
               <Typography
                 align="left"
                 variant="overline"
-                className={classes.characterLineInfo}
+                sx={{ fontWeight: 'bold' }}
               >
                 <RandomWord
                   word={`${moment(dob).format('DD/MM/YY')}`}
@@ -221,38 +209,26 @@ export const GeneralInfo = (
         >
           <Grid item container xs direction="column">
             <Grid item xs>
-              <Typography
-                align="left"
-                className={classes.characterLineInfo}
-              >
+              <Typography align="left" sx={{ fontWeight: 'bold' }}>
                 <RandomWord word={`${firstName} ${lastName}`} />
               </Typography>
             </Grid>
             <Grid item xs>
               {gender && (
-                <Typography
-                  align="left"
-                  className={classes.characterLineInfo}
-                >
+                <Typography align="left" sx={{ fontWeight: 'bold' }}>
                   {gender === 'male' ? '🚹 ' : '🚺 '}
                   <RandomWord word={` ${gender}`} />
                 </Typography>
               )}
             </Grid>
             <Grid item xs>
-              <Typography
-                align="left"
-                className={classes.characterLineInfo}
-              >
+              <Typography align="left" sx={{ fontWeight: 'bold' }}>
                 Profession:
                 <RandomWord word={` ${profession?.name}`} />
               </Typography>
             </Grid>
             <Grid item xs>
-              <Typography
-                align="left"
-                className={classes.characterLineInfo}
-              >
+              <Typography align="left" sx={{ fontWeight: 'bold' }}>
                 Employeur:
                 <RandomWord word={` ${employer}`} />
               </Typography>
@@ -270,7 +246,18 @@ export const GeneralInfo = (
   } else {
     return (
       <Grid
-        className={classes.idCard}
+        sx={{
+          margin: 'auto',
+          overflow: 'hidden',
+          // border: '1px solid black',
+          borderRadius: '6px',
+          boxShadow: ' 2px 2px 6px black',
+
+          backgroundImage: `url(${ID_background})`,
+          backgroundSize: 'cover',
+          height: '303px',
+          width: '500px',
+        }}
         container
         spacing={2}
         justifyContent="center"
@@ -280,10 +267,24 @@ export const GeneralInfo = (
           container
           alignItems="center"
           xs={12}
-          className={classes.dgHeader}
+          sx={{
+            marginTop: '16px',
+            backgroundColor: '#123718',
+            height: '52px',
+          }}
         >
-          <img src={logo} className={classes.dgLogo} />
-          <Typography variant="h6" className={classes.dgTitle}>
+          <img
+            src={logo}
+            style={{
+              marginRight: '8px',
+              width: '36px',
+              height: '36px',
+            }}
+          />
+          <Typography
+            variant="h6"
+            sx={{ fontFamily: 'VeteranTypewriter', color: 'white' }}
+          >
             DELTA GREEN AGENT
           </Typography>
         </Grid>
@@ -296,11 +297,14 @@ export const GeneralInfo = (
           justifyContent="center"
         >
           <Grid item>
-            <Skeleton className={classes.portrait} variant="rect" />
+            <Skeleton
+              sx={{ width: '80px', height: '80px' }}
+              variant="rectangular"
+            />
           </Grid>
           <Grid item xs>
             <Skeleton
-              variant="rect"
+              variant="rectangular"
               style={{ width: '2em', height: '2em', margin: 'auto' }}
             />
           </Grid>

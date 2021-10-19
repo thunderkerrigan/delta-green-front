@@ -7,14 +7,14 @@ import {
   Grid,
   Slide,
   TextField,
-} from '@material-ui/core'
-import { TransitionProps } from '@material-ui/core/transitions'
+} from '@mui/material'
+import { TransitionProps } from '@mui/material/transitions'
 import React, { useState } from 'react'
 import { useConnection } from '../services/useConnection'
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
-    children?: React.ReactElement
+    children: React.ReactElement
   },
   ref: React.Ref<unknown>,
 ) {

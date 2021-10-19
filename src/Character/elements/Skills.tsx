@@ -1,24 +1,6 @@
 import React, { Fragment } from 'react'
-import {
-  Grid,
-  makeStyles,
-  Paper,
-  Typography,
-} from '@material-ui/core'
+import { Grid, Paper, Typography } from '@mui/material'
 import { Skills } from 'delta-green-core/src/models/CharacterModel'
-
-const useStyles = makeStyles({
-  categorie: {
-    minWidth: '140px',
-    padding: '0 16px',
-    fontFamily: 'VeteranTypewriter',
-    backgroundColor: '#123718',
-    color: 'white',
-    borderRadius: '4px',
-    boxShadow: '5px 5px 5px black',
-  },
-})
-
 export const SkillsSet = ({
   category,
   skills,
@@ -30,7 +12,6 @@ export const SkillsSet = ({
   >
   masterySkills?: Partial<Skills[] | string[]>
 }): JSX.Element => {
-  const classes = useStyles()
   if (skills === undefined) {
     return <Fragment />
   }
@@ -54,7 +35,18 @@ export const SkillsSet = ({
       xl={3}
     >
       <Grid item>
-        <Typography variant="h6" className={classes.categorie}>
+        <Typography
+          variant="h6"
+          sx={{
+            minWidth: '140px',
+            padding: '0 16px',
+            fontFamily: 'VeteranTypewriter',
+            backgroundColor: '#123718',
+            color: 'white',
+            borderRadius: '4px',
+            boxShadow: '5px 5px 5px black',
+          }}
+        >
           {category}
         </Typography>
       </Grid>

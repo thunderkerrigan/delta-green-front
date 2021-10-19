@@ -2,7 +2,7 @@
 import React from 'react'
 // import background from '../Images/paper_background.jpg'
 
-import { Avatar, TextField } from '@material-ui/core'
+import { Avatar, TextField } from '@mui/material'
 import dglogo from '../Images/logo_V2.png'
 import { Editor } from './elements/Editor'
 

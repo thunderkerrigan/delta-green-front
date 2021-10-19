@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { useCallback, useMemo } from 'react'
+import { useCallback } from 'react'
 import { useCookies } from 'react-cookie'
 import { useDispatch } from 'react-redux'
 import useAsync from '../hooks/useAsync'

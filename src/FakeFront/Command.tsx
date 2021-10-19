@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   Card,
   CardActionArea,
@@ -11,19 +12,18 @@ import {
   Divider,
   Grid,
   Grow,
-  makeStyles,
   Paper,
   Slide,
   Typography,
-} from '@material-ui/core'
-import { TransitionProps } from '@material-ui/core/transitions'
+} from '@mui/material'
+import { TransitionProps } from '@mui/material/transitions'
 import React, { useState } from 'react'
 
 import { Pizza, pizzas } from './pizzas/pizzas'
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
-    children?: React.ReactElement
+    children: React.ReactElement
   },
   ref: React.Ref<unknown>,
 ) {
@@ -45,29 +45,6 @@ interface Props {
   handleClose: () => void
 }
 
-const useStyles = makeStyles({
-  root: {
-    display: 'flex',
-    height: '150px',
-  },
-  actions: {
-    width: '300px',
-  },
-  details: {
-    display: 'flex',
-    flexDirection: 'column',
-  },
-  content: {
-    flex: '1 0 auto',
-  },
-  cover: {
-    display: 'flex',
-    minWidth: 150,
-    height: '100%',
-    boxShadow: 'inset -2px 0 4px black',
-  },
-})
-
 interface PizzaCount extends Pizza {
   count: number
 }
@@ -78,7 +55,6 @@ export const Command = ({
   handleSignUp,
   handleClose,
 }: Props): JSX.Element => {
-  const classes = useStyles()
   const [cartItems, setcartItems] = useState<Pizza[]>([])
   const cartCount = cartItems.reduce<PizzaCount[]>(
     (current, item) => {
@@ -120,7 +96,12 @@ export const Command = ({
           <Grid item xs={9} container spacing={2}>
             {pizzas.map((i) => (
               <Grid item key={i.name} xs={6}>
-                <Card className={classes.root}>
+                <Card
+                  sx={{
+                    display: 'flex',
+                    height: '150px',
+                  }}
+                >
                   <CardActionArea
                     style={{ display: 'flex' }}
                     onClick={() =>
@@ -128,19 +109,33 @@ export const Command = ({
                     }
                   >
                     <CardMedia
-                      className={classes.cover}
+                      sx={{
+                        display: 'flex',
+                        minWidth: 150,
+                        height: '100%',
+                        boxShadow: 'inset -2px 0 4px black',
+                      }}
                       title={i.imageURL}
                       image={i.imageURL}
                     />
-                    <div className={classes.details}>
-                      <CardContent className={classes.content}>
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                      }}
+                    >
+                      <CardContent
+                        sx={{
+                          flex: '1 0 auto',
+                        }}
+                      >
                         <Typography variant="h5">{i.name}</Typography>
                         <Typography variant="caption">
                           {i.ingredients.join(', ')}
                         </Typography>
                         <Typography>{`${i.price} $`}</Typography>
                       </CardContent>
-                    </div>
+                    </Box>
                   </CardActionArea>
                 </Card>
               </Grid>
@@ -208,7 +203,9 @@ export const Command = ({
       </DialogContent>
       <DialogActions>
         <Grid
-          className={classes.actions}
+          sx={{
+            width: '300px',
+          }}
           direction="column"
           spacing={1}
           container

@@ -5,13 +5,13 @@ import {
   DialogContent,
   DialogTitle,
   Slide,
-} from '@material-ui/core'
-import { TransitionProps } from '@material-ui/core/transitions'
+} from '@mui/material'
+import { TransitionProps } from '@mui/material/transitions'
 import React, { ReactElement } from 'react'
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
-    children?: React.ReactElement
+    children: React.ReactElement
   },
   ref: React.Ref<unknown>,
 ) {

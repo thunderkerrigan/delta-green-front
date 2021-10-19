@@ -1,0 +1,32 @@
+.fake-root {
+  position: 'fixed';
+  height: '100vh';
+  width: '100vw';
+  z-index: -100;
+  overflow: 'hidden';
+}
+@keyframes zoom {
+  0% {
+    transform: scale(1) rotateZ(15deg);
+  }
+  50% {
+    transform: scale(1.2) rotateZ(10deg);
+  }
+  100% {
+    transform: scale(1) rotateZ(15deg);
+  }
+}
+
+.card {
+  box-shadow: 0 3px 8px black;
+}
+
+.cardImage {
+  width: auto;
+}
+.card:hover .cardImage {
+  transform: scale(1.2) rotateZ(15deg);
+}
+.card:hover .cardTitle {
+  transform: scale(1.2);
+}

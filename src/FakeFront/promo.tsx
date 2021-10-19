@@ -1,20 +1,7 @@
-import { Fade } from '@material-ui/core'
-import { makeStyles } from '@material-ui/styles'
 import React, { ReactElement, useEffect, useState } from 'react'
-
-const useStyles = makeStyles({
-  root: {
-    position: 'absolute',
-    marginTop: '20%',
-    width: '50em',
-    height: '20em',
-    backgroundColor: 'rgba(255,255,255, 0.2)',
-    boxShadow: '0 0 20em rgba(255,255,255, 0.3)',
-  },
-})
+import { Box, Fade } from '@mui/material'
 
 export const Promo = (): ReactElement => {
-  const classes = useStyles()
   const [showPromo, setShowPromo] = useState(true)
 
   useEffect(() => {
@@ -30,7 +17,18 @@ export const Promo = (): ReactElement => {
   }, [])
   return (
     <Fade in={showPromo} unmountOnExit mountOnEnter>
-      <div className={classes.root}>LOL</div>
+      <Box
+        sx={{
+          position: 'absolute',
+          marginTop: '20%',
+          width: '50em',
+          height: '20em',
+          backgroundColor: 'rgba(255,255,255, 0.2)',
+          boxShadow: '0 0 20em rgba(255,255,255, 0.3)',
+        }}
+      >
+        LOL
+      </Box>
     </Fade>
   )
 }
