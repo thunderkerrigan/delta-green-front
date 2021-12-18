@@ -51,7 +51,7 @@ const Profile = (): JSX.Element => {
         <Grid item container xs>
           <Grid item container spacing={2}>
             <Grid item xs={12} lg>
-              <GeneralInfo {...character} />
+              <GeneralInfo />
             </Grid>
             <Grid item xs={12} lg>
               <StatsSet stats={character.stats} />

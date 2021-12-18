@@ -5,27 +5,29 @@ import {
   Notifications as NotificationsIcon,
   MoreVert as MoreIcon,
   AccountCircle,
+  Search as SearchIcon,
 } from '@mui/icons-material'
 import logoURL from '../Images/logo.png'
 import './AppBar.css'
-import { useHistory } from 'react-router'
-import { useConnection } from '../services/useConnection'
+import { useNavigate } from 'react-router'
 import {
+  alpha,
   AppBar,
   Badge,
   Box,
   Divider,
   IconButton,
+  InputBase,
   Menu,
   MenuItem,
+  styled,
   Toolbar,
   Typography,
 } from '@mui/material'
 
 const DeltaGreenAppBar = (): JSX.Element => {
   // const classes = useStyles()
-  const history = useHistory()
-  const { logout } = useConnection()
+  const navigate = useNavigate()
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(
     null,
   )
@@ -52,11 +54,10 @@ const DeltaGreenAppBar = (): JSX.Element => {
 
   const handleProfile = () => {
     handleMenuClose()
-    history.push('/profile')
+    navigate('/profile')
   }
   const handleDisconnect = () => {
-    logout()
-    history.push('/')
+    navigate('/')
   }
 
   const handleMobileMenuOpen = (
@@ -64,6 +65,46 @@ const DeltaGreenAppBar = (): JSX.Element => {
   ) => {
     setMobileMoreAnchorEl(event.currentTarget)
   }
+
+  const Search = styled('div')(({ theme }) => ({
+    position: 'relative',
+    borderRadius: theme.shape.borderRadius,
+    backgroundColor: alpha(theme.palette.common.white, 0.15),
+    '&:hover': {
+      backgroundColor: alpha(theme.palette.common.white, 0.25),
+    },
+    marginRight: theme.spacing(2),
+    marginLeft: 0,
+    width: '100%',
+    [theme.breakpoints.up('sm')]: {
+      marginLeft: theme.spacing(3),
+      width: 'auto',
+    },
+  }))
+
+  const SearchIconWrapper = styled('div')(({ theme }) => ({
+    padding: theme.spacing(0, 2),
+    height: '100%',
+    position: 'absolute',
+    pointerEvents: 'none',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  }))
+
+  const StyledInputBase = styled(InputBase)(({ theme }) => ({
+    color: 'inherit',
+    '& .MuiInputBase-input': {
+      padding: theme.spacing(1, 1, 1, 0),
+      // vertical padding + font size from searchIcon
+      paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+      transition: theme.transitions.create('width'),
+      width: '100%',
+      [theme.breakpoints.up('md')]: {
+        width: '20ch',
+      },
+    },
+  }))
 
   const menuId = 'primary-search-account-menu'
   const renderMenu = (
@@ -132,7 +173,7 @@ const DeltaGreenAppBar = (): JSX.Element => {
       <AppBar
         position="static"
         sx={{
-          backgroundColor: '#123718',
+          // backgroundColor: '#123718',
           fontFamily: 'VeteranTypewriter',
         }}
       >
@@ -154,7 +195,47 @@ const DeltaGreenAppBar = (): JSX.Element => {
           >
             DELTA GREEN
           </Typography>
+          <Search>
+            <SearchIconWrapper>
+              <SearchIcon />
+            </SearchIconWrapper>
+            <StyledInputBase
+              placeholder="Search…"
+              inputProps={{ 'aria-label': 'search' }}
+            />
+          </Search>
           <Box sx={{ flexGrow: 1 }} />
+          <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+            <IconButton
+              size="large"
+              aria-label="show 4 new mails"
+              color="inherit"
+            >
+              <Badge badgeContent={4} color="error">
+                <MailIcon />
+              </Badge>
+            </IconButton>
+            <IconButton
+              size="large"
+              aria-label="show 17 new notifications"
+              color="inherit"
+            >
+              <Badge badgeContent={17} color="error">
+                <NotificationsIcon />
+              </Badge>
+            </IconButton>
+            <IconButton
+              size="large"
+              edge="end"
+              aria-label="account of current user"
+              aria-controls={menuId}
+              aria-haspopup="true"
+              onClick={handleProfileMenuOpen}
+              color="inherit"
+            >
+              <AccountCircle />
+            </IconButton>
+          </Box>
           <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
             <IconButton
               size="large"

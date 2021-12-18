@@ -12,14 +12,20 @@ import '@fontsource/roboto/500.css'
 import '@fontsource/roboto/700.css'
 import { Provider } from 'react-redux'
 import { store } from './redux/store'
+import DateAdapter from '@mui/lab/AdapterLuxon'
+import { FirebaseAuthProvider } from './firebase'
+import { LocalizationProvider } from '@mui/lab'
 
 const rootElement = document.getElementById('root')
 
 ReactDOM.render(
   <Provider store={store}>
     <CssBaseline />
+    <FirebaseAuthProvider />
     <BrowserRouter>
-      <App />
+      <LocalizationProvider dateAdapter={DateAdapter}>
+        <App />
+      </LocalizationProvider>
     </BrowserRouter>
   </Provider>,
   rootElement,

@@ -1,10 +1,11 @@
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import {
-  createSlice,
-  PayloadAction,
-} from '@reduxjs/toolkit'
-import { CharacterModel } from 'delta-green-core/src/models/CharacterModel'
+  CharacterModel,
+  Stat,
+} from 'delta-green-core/src/models/CharacterModel'
+import { v4 as uuidv4 } from 'uuid'
 
-export type CharacterState = CharacterModel | null
+export type CharacterState = Partial<CharacterModel>
 
 // const charactersAdapter = createEntityAdapter<CharacterModel>({
 //   selectId: (character) => character.id,
@@ -17,19 +18,56 @@ export type CharacterState = CharacterModel | null
 //   state = action.payload
 // }
 
-const initialState: CharacterState = null
+const makeid = (length: number) => {
+  let result = ''
+  const characters =
+    'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+  const charactersLength = characters.length
+  for (let i = 0; i < length; i++) {
+    result += characters.charAt(
+      Math.floor(Math.random() * charactersLength),
+    )
+  }
+
+  return result
+}
+
+const initialState: CharacterState = { clearanceLevel: 0 }
 
 export const characterSlice = createSlice({
   name: 'character',
   initialState: initialState as CharacterState,
   reducers: {
-    setCharacter: (_, action: PayloadAction<CharacterState>) => {
-      return action.payload
+    resetCharacter: (state) => {
+      return state
+    },
+    setCharacterProperties: (
+      state,
+      action: PayloadAction<CharacterState>,
+    ) => {
+      return {
+        ...state,
+        ...action.payload,
+        educationAndOccupationalHistory: makeid(16),
+      }
+    },
+    setStats: (
+      state,
+      action: PayloadAction<{
+        [key in Stat]?: number
+      }>,
+    ) => {
+      state.stats = { ...state.stats, ...action.payload } as Record<
+        Stat,
+        number
+      >
+      return state
     },
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { setCharacter } = characterSlice.actions
+export const { setCharacterProperties, resetCharacter, setStats } =
+  characterSlice.actions
 
 export default characterSlice.reducer

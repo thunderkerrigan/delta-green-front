@@ -22,7 +22,7 @@ const SAVE_INTERVAL_MS = 2000
 export const Editor = (): JSX.Element => {
   const [socket, setSocket] = useState<Socket>()
   const [quill, setQuill] = useState<Quill>()
-  const { id: documentID } = useParams<{ id: string }>()
+  const { id: documentID } = useParams()
   useEffect(() => {
     const s = io('http://localhost:3001')
     setSocket(s)

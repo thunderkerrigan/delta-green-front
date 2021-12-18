@@ -3,7 +3,10 @@ import { CharacterModel } from 'delta-green-core/src/models/CharacterModel'
 import { useCallback } from 'react'
 import { useCookies } from 'react-cookie'
 import { useDispatch, useSelector } from 'react-redux'
-import { setCharacter } from '../redux/CharacterSlice'
+import {
+  resetCharacter,
+  setCharacterProperties,
+} from '../redux/CharacterSlice'
 import { RootState } from '../redux/store'
 import useAsync from '../hooks/useAsync'
 import { setCharacters, UserState } from '../redux/UserSlice'
@@ -35,7 +38,7 @@ export const useCharacter = (): {
     useAsync<void>(memoizedGetMyCharacterRequest, [])
   const memoizedGetCharacterRequest = useCallback(async () => {
     try {
-      dispatch(setCharacter(null))
+      dispatch(resetCharacter())
       const { data } = await axios.get<CharacterModel>(
         'http://localhost:33582/api/randomCharacter',
         {
@@ -45,7 +48,7 @@ export const useCharacter = (): {
         },
       )
       if (data) {
-        dispatch(setCharacter(data))
+        dispatch(setCharacterProperties(data))
       }
     } catch (error) {
       //  TODO

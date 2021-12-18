@@ -1,14 +1,26 @@
-import React from 'react'
-import { Divider, Grid, Paper, styled } from '@mui/material'
+import React, { useEffect } from 'react'
+import {
+  Box,
+  Button,
+  Divider,
+  Grid,
+  Paper,
+  styled,
+} from '@mui/material'
 import RefreshIcon from '@mui/icons-material/Refresh'
 import { GeneralInfo } from './elements/GeneralInfo'
 import { SkillsSet } from './elements/Skills'
 import { StatsSet } from './elements/Stats'
 import { RootState } from '../redux/store'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useCharacter } from '../services/useCharacter'
-import { CharacterState } from '../redux/CharacterSlice'
+import {
+  CharacterState,
+  setCharacterProperties,
+} from '../redux/CharacterSlice'
 import { LoadingButton } from '@mui/lab'
+import { useLazyGetNewCharacterQuery } from '../redux/CharacterAPISlice'
+import { Link } from 'react-router-dom'
 
 const CharacterPaper = styled(Paper)(({ theme }) => ({
   margin: theme.spacing(2),
@@ -51,17 +63,22 @@ const CharacterDivider = styled(Divider)(({ theme }) => ({
 // }))
 
 const FetchNewCharacterButton = () => {
-  const { useGetCharacter } = useCharacter()
-  const { loading } = useGetCharacter()
-
+  const [fetchUser, { isFetching, isLoading, data }] =
+    useLazyGetNewCharacterQuery()
+  const dispatch = useDispatch()
+  useEffect(() => {
+    if (data) {
+      dispatch(setCharacterProperties(data))
+    }
+  }, [data])
   return (
     <LoadingButton
       // className={classes.button}
-      loading={loading}
+      loading={isLoading || isFetching}
       startIcon={<RefreshIcon />}
       variant="contained"
       color="secondary"
-      onClick={useGetCharacter}
+      onClick={() => fetchUser()}
     >
       Reroll
     </LoadingButton>
@@ -85,6 +102,29 @@ const AddCharacterButton = () => {
   )
 }
 
+const CharacterToolBar = () => {
+  return (
+    <>
+      <Grid item>
+        <FetchNewCharacterButton />
+      </Grid>
+      <Grid item>
+        <AddCharacterButton />
+      </Grid>
+      <Grid item>
+        <Button
+          variant="contained"
+          color="secondary"
+          component={Link}
+          to="/createcharacter"
+        >
+          Create Character
+        </Button>
+      </Grid>
+    </>
+  )
+}
+
 const Character = (): JSX.Element => {
   const character = useSelector(
     (state: RootState) => state.character as CharacterState,
@@ -93,22 +133,20 @@ const Character = (): JSX.Element => {
   return (
     <CharacterPaper>
       <Grid item container xs spacing={1}>
-        <Grid item>
-          <FetchNewCharacterButton />
-        </Grid>
-        <Grid item>
-          <AddCharacterButton />
-        </Grid>
-
+        <CharacterToolBar />
         <Grid item xs={12}>
           <CharacterDivider />
         </Grid>
         <Grid item container spacing={2}>
           <Grid item xs={12} lg>
-            {character && <GeneralInfo {...character} />}
+            <Box sx={{ padding: '16px' }}>
+              <GeneralInfo />
+            </Box>
           </Grid>
           <Grid item xs={12} lg>
-            <StatsSet stats={character?.stats} />
+            <Box sx={{ padding: '16px' }}>
+              <StatsSet stats={character?.stats} />
+            </Box>
           </Grid>
           <Grid item xs={12}>
             <CharacterDivider />
@@ -126,33 +164,33 @@ const Character = (): JSX.Element => {
             <SkillsSet
               category={'Connaissance'}
               skills={character?.knowledgeSkills}
-              masterySkills={character?.profession.skills}
+              masterySkills={character.profession?.skills}
             />
             <SkillsSet
               category={'Expertise'}
               skills={character?.expertiseSkills}
-              masterySkills={character?.profession.skills}
+              masterySkills={character.profession?.skills}
             />
             <SkillsSet
               category={'Sens'}
               skills={character?.sensorialSkills}
-              masterySkills={character?.profession.skills}
+              masterySkills={character.profession?.skills}
             />
             <SkillsSet
               category={'Influence'}
               skills={character?.influenceSkills}
-              masterySkills={character?.profession.skills}
+              masterySkills={character.profession?.skills}
             />
 
             <SkillsSet
               category={'Action'}
               skills={character?.actionSkills}
-              masterySkills={character?.profession.skills}
+              masterySkills={character.profession?.skills}
             />
             <SkillsSet
               category={'Autres'}
               skills={character?.otherSkills}
-              masterySkills={character?.profession.skills}
+              masterySkills={character.profession?.skills}
             />
           </Grid>
         </Grid>

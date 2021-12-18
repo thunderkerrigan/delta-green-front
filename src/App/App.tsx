@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react'
 import './App.css'
 import DeltaGreenAppBar from '../AppBar/AppBar'
-import { Redirect, Route } from 'react-router'
+import { Route, Navigate, Routes } from 'react-router-dom'
 import Main from '../Main/Main'
 import Character from '../Character/Character'
 import {
@@ -9,17 +9,17 @@ import {
   Toolbar,
   ThemeProvider,
   createTheme,
+  ThemeOptions,
 } from '@mui/material'
-import { green } from '@mui/material/colors'
+import { amber, green } from '@mui/material/colors'
 import { RootState } from '../redux/store'
 import { useSelector } from 'react-redux'
 import { FakeFront } from '../FakeFront'
-import { useTryConnection } from '../services/useConnection'
 import { Article } from '../Article/Article'
 import { v4 as uuidV4 } from 'uuid'
 import Profile from '../Profile/Profile'
-import { useCharacter } from '../services/useCharacter'
 import splashscreenURL from '../Images/splashscreen.gif'
+import CreateCharacter from '../CreateCharacter/CreateCharacter'
 
 // const stuff: DossierInterface = {
 //   codename: 'ITT-4325',
@@ -34,17 +34,22 @@ const fakeTheme = createTheme({
   palette: { primary: green },
 })
 
-const theme = createTheme({
-  palette: { secondary: green },
-})
+export const themeOptions: ThemeOptions = {
+  palette: {
+    primary: {
+      main: '#1b5e20',
+    },
+    secondary: {
+      main: '#bf360c',
+    },
+  },
+}
+const theme = createTheme(themeOptions)
 
 const App = (): ReactElement => {
   const user = useSelector((state: RootState) => state.user)
-  const { useGetMyCharacters } = useCharacter()
-  const { loading: waiting } = useTryConnection()
 
-  const { loading } = useGetMyCharacters()
-  if (waiting || loading) {
+  if (user.isLoading) {
     return (
       <div
         style={{
@@ -70,23 +75,29 @@ const App = (): ReactElement => {
         <div className="App">
           <DeltaGreenAppBar />
           <Toolbar />
-          <Container disableGutters>
-            <Route exact strict path="/">
-              <Main />
-              <Character />
-            </Route>
-            <Route exact path="/article">
-              <Redirect to={`/article/${uuidV4()}`} />
-            </Route>
-            <Route path="/article/:id">
-              <Article />
-            </Route>
-            <Route path="/profile">
-              <Profile />
-            </Route>
-            <Route path="/character">
-              <Character />
-            </Route>
+          <Container maxWidth="xl" disableGutters>
+            <Routes>
+              <Route
+                path="/"
+                element={
+                  <>
+                    <Main />
+                    <Character />
+                  </>
+                }
+              />
+              <Route
+                path="/article"
+                element={<Navigate to={`/article/${uuidV4()}`} />}
+              />
+              <Route path="/article/:id" element={<Article />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route
+                path="/createcharacter"
+                element={<CreateCharacter />}
+              />
+              <Route path="/character" element={<Character />} />
+            </Routes>
           </Container>
         </div>
       </ThemeProvider>

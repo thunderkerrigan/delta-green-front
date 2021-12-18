@@ -1,16 +1,16 @@
 import {
-  Button,
+  AppBar,
+  Box,
   Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  Grid,
   Slide,
-  TextField,
+  Toolbar,
+  Typography,
 } from '@mui/material'
 import { TransitionProps } from '@mui/material/transitions'
-import React, { useState } from 'react'
-import { useConnection } from '../services/useConnection'
+import React, { useEffect } from 'react'
+import { authUIInstance, uiConfig } from '../firebase'
+import logoURL from '../Images/logo_V2.png'
+import 'firebaseui/dist/firebaseui.css'
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -34,55 +34,42 @@ interface Props {
   handleClose: () => void
 }
 
+const FirebaseAuthComponent = () => {
+  useEffect(() => {
+    console.log('uiinstance ready')
+    console.log(
+      `uiInstance.isPendingRedirect(): ${authUIInstance.isPendingRedirect()}`,
+    )
+    authUIInstance.start('#firebaseui-auth-container', uiConfig)
+  }, [])
+
+  return <Box margin={'16px'} id="firebaseui-auth-container" />
+}
+
 export const Connect = ({
   open,
   handleClose,
 }: Props): JSX.Element => {
-  const [username, setUsername] = useState<string>('')
-  const [password, setPassword] = useState<string>('')
-  const { tryLogin } = useConnection()
-  const canClickLogin = username !== '' && password !== ''
-  const handleConnect = () => tryLogin(username, password)
   return (
     <Dialog
       maxWidth="xs"
       open={open}
+      fullWidth
       TransitionComponent={Transition}
       keepMounted
       onClose={handleClose}
       aria-labelledby="alert-dialog-slide-title"
       aria-describedby="alert-dialog-slide-description"
     >
-      <DialogTitle id="alert-dialog-slide-title">
-        {'Connexion à votre compte Delta Green Pizza !'}
-      </DialogTitle>
-      <DialogContent>
-        <Grid container spacing={2}>
-          <Grid item xs={12}>
-            <TextField
-              label="Identifiant"
-              onChange={(e) => setUsername(e.target.value)}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              label="Mot de Passe"
-              type="password"
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </Grid>
-        </Grid>
-      </DialogContent>
-      <DialogActions>
-        <Button
-          variant="contained"
-          disabled={!canClickLogin}
-          onClick={handleConnect}
-          color="primary"
-        >
-          Login
-        </Button>
-      </DialogActions>
+      <AppBar position="static" id="alert-dialog-slide-title">
+        <Toolbar>
+          <img src={logoURL} width={'70px'} />
+          <Typography variant="h6" color={'white'}>
+            {'Connexion à Delta Green Pizza !'}
+          </Typography>
+        </Toolbar>
+      </AppBar>
+      <FirebaseAuthComponent />
     </Dialog>
   )
 }

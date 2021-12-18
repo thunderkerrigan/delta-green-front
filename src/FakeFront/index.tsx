@@ -29,7 +29,6 @@ import {
   ShoppingCart,
   Twitter,
 } from '@mui/icons-material'
-import { useSelector } from 'react-redux'
 import Slider from 'react-slick'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
@@ -41,7 +40,6 @@ import { Location } from './Location'
 import { Command } from './Command'
 import { Connect } from './connect'
 import { CreateAccount } from './CreateAccount'
-import { RootState } from '../redux/store'
 import './index.css'
 
 const HeaderButton = styled(Button)(() => ({
@@ -59,6 +57,8 @@ const PromoBox = styled(Box)(() => ({
   borderRadius: '0 15px 15px 0 ',
 }))
 const BelowGrid = styled(Grid)(() => ({
+  zIndex: -1,
+  pointerEvents: 'auto',
   boxShadow: '0 3px 8px black',
   ':hover': {
     cardImage: {
@@ -288,6 +288,7 @@ export const FakeFront: FC = (): ReactElement => {
       </Box>
       <Box
         sx={{
+          pointerEvents: 'none',
           bottom: 0,
           position: 'fixed',
           height: '12em',
@@ -381,7 +382,12 @@ export const FakeFront: FC = (): ReactElement => {
           justifyContent="flex-end"
           alignContent="center"
         >
-          <Grid item>
+          <Grid
+            item
+            sx={{
+              pointerEvents: 'auto',
+            }}
+          >
             <>
               <IconButton
                 size="large"
