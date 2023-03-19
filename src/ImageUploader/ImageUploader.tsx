@@ -50,20 +50,6 @@ const ImageUploader = ({
   ) => {
     event.preventDefault()
     handleImageUpload(event.dataTransfer.files[0] || undefined)
-    // if (event.dataTransfer.files.length === 1) {
-    //   const file = event.dataTransfer.files[0]
-    //   const reader = new FileReader()
-    //   reader.readAsDataURL(file)
-    //   reader.onload = () => {
-    //     console.log(reader.result)
-    //     changeAvatar(reader.result as string)
-    //     // setProfilePicture(reader.result as string)
-    //   }
-    // } else {
-    //   changeAvatar('')
-    //   // TODO: show error
-    //   // setProfilePicture('')
-    // }
   }
 
   const handleImageUpload = (file?: Blob) => {

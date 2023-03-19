@@ -76,19 +76,27 @@ export const Editor = (): JSX.Element => {
     }
   }, [socket, quill])
 
-  const wrapperRef = useCallback((wrapper) => {
-    if (wrapper == null) return
-    wrapper.innerHTML = ''
-    const editor = document.createElement('div')
-    wrapper.append(editor)
-    const q = new Quill(editor, {
-      theme: 'snow',
-      modules: { toolbar: TOOLBAR_OPTIONS },
-    })
-    q.disable()
-    q.setText('Loading ...')
-    setQuill(q)
-  }, [])
+  const wrapperRef = useCallback(
+    (
+      wrapper: {
+        innerHTML: string
+        append: (arg0: HTMLDivElement) => void
+      } | null,
+    ) => {
+      if (wrapper == null) return
+      wrapper.innerHTML = ''
+      const editor = document.createElement('div')
+      wrapper.append(editor)
+      const q = new Quill(editor, {
+        theme: 'snow',
+        modules: { toolbar: TOOLBAR_OPTIONS },
+      })
+      q.disable()
+      q.setText('Loading ...')
+      setQuill(q)
+    },
+    [],
+  )
 
   return <div className="container" ref={wrapperRef}></div>
 }

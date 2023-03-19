@@ -39,7 +39,6 @@ import { Menu } from './menu'
 import { Location } from './Location'
 import { Command } from './Command'
 import { Connect } from './connect'
-import { CreateAccount } from './CreateAccount'
 import './index.css'
 
 const HeaderButton = styled(Button)(() => ({
@@ -118,7 +117,7 @@ export const FakeFront: FC = (): ReactElement => {
   const [showLogin, setShowLogin] = useState(false)
   const [showLocation, setShowLocation] = useState(false)
   const [showCommand, setShowCommand] = useState(false)
-  const [showCreateAccount, setShowCreateAccount] = useState(false)
+  // const [showCreateAccount, setShowCreateAccount] = useState(false)
   const [currentIndex, setCurrentIndex] = useState(0)
 
   return (
@@ -132,10 +131,6 @@ export const FakeFront: FC = (): ReactElement => {
         open={showLogin}
         handleClose={() => setShowLogin(false)}
       />
-      <CreateAccount
-        open={showCreateAccount}
-        handleClose={() => setShowCreateAccount(false)}
-      />
       <Command
         open={showCommand}
         handleClose={() => setShowCommand(false)}
@@ -145,7 +140,7 @@ export const FakeFront: FC = (): ReactElement => {
         }}
         handleSignUp={() => {
           setShowCommand(false)
-          setShowCreateAccount(true)
+          // setShowCreateAccount(true)
         }}
       />
       <Location

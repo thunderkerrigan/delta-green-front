@@ -19,7 +19,25 @@ import {
 } from '@mui/material/colors'
 import { Stat } from 'delta-green-core/src/models/CharacterModel'
 import { Radar } from 'react-chartjs-2'
-import { ChartOptions } from 'chart.js'
+import {
+  Chart as ChartJS,
+  RadialLinearScale,
+  PointElement,
+  LineElement,
+  Filler,
+  Tooltip as ChartToolTip,
+  Legend,
+  ChartOptions,
+} from 'chart.js'
+
+ChartJS.register(
+  RadialLinearScale,
+  PointElement,
+  LineElement,
+  Filler,
+  ChartToolTip,
+  Legend,
+)
 
 const statScoreColor = (
   score: number,

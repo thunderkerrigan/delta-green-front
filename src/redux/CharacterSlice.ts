@@ -3,7 +3,7 @@ import {
   CharacterModel,
   Stat,
 } from 'delta-green-core/src/models/CharacterModel'
-import { v4 as uuidv4 } from 'uuid'
+// import { v4 as uuidv4 } from 'uuid'
 
 export type CharacterState = Partial<CharacterModel>
 

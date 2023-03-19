@@ -29,6 +29,7 @@ const useAsync = <T>(
     } finally {
       setLoading(false)
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [callback, ...dependencies])
 
   useEffect(() => {

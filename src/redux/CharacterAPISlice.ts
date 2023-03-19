@@ -3,6 +3,7 @@ import {
   fetchBaseQuery,
 } from '@reduxjs/toolkit/query/react'
 import { CharacterModel } from 'delta-green-core/src/models/CharacterModel'
+// import { characterSlice } from './CharacterSlice'
 const baseUrl = 'http://localhost:33582/api/v1/character'
 
 // Define a service using a base URL and expected endpoints
@@ -43,11 +44,11 @@ export const CharacterAPI = createApi({
 // auto-generated based on the defined endpoints
 export const {
   endpoints,
+  useGetNewCharacterQuery,
   useLazyGetNewCharacterQuery,
   useAddCharacterToUserMutation,
   useRemoveCharacterToUserMutation,
 } = CharacterAPI
-
 // export const postApi = createApi({
 //     reducerPath: "postsApi",
 //     baseQuery: fetchBaseQuery({ baseUrl: "/" }),

@@ -1,7 +1,17 @@
-import React, { Fragment } from 'react'
+import React from 'react'
+import Map from '../Map/Map'
+import AlertBox from './AlertBox'
+import LateralMenu from './LateralMenu'
 
 const Main = (): JSX.Element => {
-  return <Fragment></Fragment>
+  return (
+    <>
+      <AlertBox />
+      <LateralMenu />
+      <Map />
+      Home
+    </>
+  )
 }
 
 export default Main

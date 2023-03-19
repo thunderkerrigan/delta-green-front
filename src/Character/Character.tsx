@@ -30,47 +30,21 @@ const CharacterDivider = styled(Divider)(({ theme }) => ({
   margin: theme.spacing(2),
 }))
 
-// const useStyles = makeStyles((theme) => ({
-//   '@keyframes popin': {
-//     '0%': {
-//       opacity: 0,
-//       transform: 'scale(5) rotateZ(30deg)',
-//       textShadow: '0 0 2em black',
-//     },
-//     '80%': { opacity: 0.3 },
-//     '100%': {
-//       opacity: 1,
-//       transform: ' scale(1) rotateZ(30deg)',
-//     },
-//   },
-//   topSecret: {
-//     color: 'red',
-//     fontFamily: 'TopSecret',
-//     fontSize: '6em',
-//     animationName: '$popin',
-//     transform: 'rotateZ(30deg)',
-//     animationDuration: '1.2s',
-//     animationTimingFunction: 'ease-out',
-//   },
-//   portrait: { width: theme.spacing(10), height: theme.spacing(10) },
-//   // button: { backgroundColor: '#123738' },
-//   characterSheet: {
-//     // margin: theme.spacing(2),
-//     // padding: theme.spacing(3),
-//   },
-//   divider: { margin: theme.spacing(2) },
-//   // divider: { margin: `${theme.spacing(2)}px 0` },
-// }))
-
 const FetchNewCharacterButton = () => {
   const [fetchUser, { isFetching, isLoading, data }] =
     useLazyGetNewCharacterQuery()
   const dispatch = useDispatch()
+
+  useEffect(() => {
+    fetchUser()
+  }, [fetchUser])
+
   useEffect(() => {
     if (data) {
       dispatch(setCharacterProperties(data))
     }
-  }, [data])
+  }, [data, dispatch])
+
   return (
     <LoadingButton
       // className={classes.button}

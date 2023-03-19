@@ -11,6 +11,7 @@ import {
 } from '@mui/material'
 import * as React from 'react'
 import { GeneralInfo } from '../Character/elements/GeneralInfo'
+import AccreditationForm from './AccreditationForm'
 import EditableSkills from './elements/EditableSkills'
 import EditableStats from './elements/EditableStats'
 
@@ -31,7 +32,7 @@ const CreateCharacterStepper = (): React.ReactElement => {
   }
 
   const panels = [
-    <Grid container key='grid-1' spacing={2}>
+    <Grid container key="grid-1" spacing={2}>
       <GeneralInfo key="1" />
       <GeneralInfo key="2" editable />
     </Grid>,
@@ -152,6 +153,7 @@ const CreateCharacter = (): React.ReactElement => {
   return (
     <Paper>
       <CreateCharacterStepper />
+      <AccreditationForm />
     </Paper>
   )
 }

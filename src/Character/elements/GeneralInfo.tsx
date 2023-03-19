@@ -11,12 +11,12 @@ import {
   Box,
   MenuItem,
   Select,
+  TextFieldProps,
 } from '@mui/material'
 import {
-  CharacterModel,
   ClearanceLevel,
 } from 'delta-green-core/src/models/CharacterModel'
-import Flag from 'react-country-flag'
+// import Flag from 'react-country-flag'
 import { useBarcode } from 'react-barcodes'
 import moment from 'moment'
 import logo from '../../Images/logo.png'
@@ -111,7 +111,7 @@ const Clearance = ({
   )
 }
 
-const IDCard = styled(Grid)(({ theme }) => ({
+const IDCard = styled(Grid)(() => ({
   margin: 'auto',
   overflow: 'hidden',
   borderRadius: '6px',
@@ -156,33 +156,33 @@ export const IDCardHeader = (): React.ReactElement => (
   </Grid>
 )
 
-const EditableBirthDate = ({
-  dob,
-}: {
-  age?: number
-  dob?: string
-}) => {
-  const dispatch = useAppDispatch()
-  const changeDob = (dob: string) =>
-    dispatch(setCharacterProperties({ dob }))
+// const EditableBirthDate = ({
+//   dob,
+// }: {
+//   age?: number
+//   dob?: string
+// }) => {
+//   const dispatch = useAppDispatch()
+//   const changeDob = (dob: string) =>
+//     dispatch(setCharacterProperties({ dob }))
 
-  const dateValue = dob ? new Date(dob) : new Date()
-  return (
-    <Grid item xs>
-      <DesktopDatePicker
-        label="date of birth"
-        inputFormat="MM/dd/yyyy"
-        value={dateValue}
-        onChange={(date) => {
-          date && changeDob(date.toString())
-        }}
-        renderInput={(params) => (
-          <TextField variant="standard" {...params} />
-        )}
-      />
-    </Grid>
-  )
-}
+//   const dateValue = dob ? new Date(dob) : new Date()
+//   return (
+//     <Grid item xs>
+//       <DesktopDatePicker
+//         label="date of birth"
+//         inputFormat="MM/dd/yyyy"
+//         value={dateValue}
+//         onChange={(date: Date) => {
+//           date && changeDob(date.toString())
+//         }}
+//         renderInput={(
+//           params: JSX.IntrinsicAttributes & TextFieldProps,
+//         ) => <TextField variant="standard" {...params} />}
+//       />
+//     </Grid>
+//   )
+// }
 const BirthDate = ({ age, dob }: { age?: number; dob?: string }) => {
   if (!dob || !age) {
     return (
@@ -376,12 +376,12 @@ const BirthdaySelector = ({
       label="date of birth"
       inputFormat="MM/dd/yyyy"
       value={date}
-      onChange={(date) => {
+      onChange={(date: Date) => {
         date && changeDob(date.toString())
       }}
-      renderInput={(params) => (
-        <TextField variant="standard" {...params} />
-      )}
+      renderInput={(
+        params: JSX.IntrinsicAttributes & TextFieldProps,
+      ) => <TextField variant="standard" {...params} />}
     />
   )
 }
@@ -496,7 +496,6 @@ const CountrySelector = () => {
             {...params}
             variant="standard"
             label="Choose a country"
-            
             inputProps={{
               ...params.inputProps,
               autoComplete: 'new-password',

@@ -11,7 +11,7 @@ import {
   createTheme,
   ThemeOptions,
 } from '@mui/material'
-import { amber, green } from '@mui/material/colors'
+import { green } from '@mui/material/colors'
 import { RootState } from '../redux/store'
 import { useSelector } from 'react-redux'
 import { FakeFront } from '../FakeFront'
@@ -82,7 +82,7 @@ const App = (): ReactElement => {
                 element={
                   <>
                     <Main />
-                    <Character />
+                    {/* <Character /> */}
                   </>
                 }
               />

@@ -1,5 +1,4 @@
 // Import the functions you need from the SDKs you need
-import React from 'react'
 import { initializeApp } from 'firebase/app'
 import {
   getAuth,
@@ -53,7 +52,8 @@ export const uiConfig: firebaseui.auth.TenantConfig = {
   },
   signInFlow: 'popup',
   callbacks: {
-    signInSuccessWithAuthResult: (authResult, redirectUrl) => {
+    // signInSuccessWithAuthResult: (authResult, redirectUrl) => {
+    signInSuccessWithAuthResult: () => {
       // User successfully signed in.
       // Return type determines whether we continue the redirect automatically
       // or whether we leave that to developer to handle.
@@ -65,6 +65,7 @@ export const uiConfig: firebaseui.auth.TenantConfig = {
 // Initialize Firebase
 export const app = initializeApp(firebaseConfig)
 export const auth = getAuth()
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const analytics = getAnalytics()
 setPersistence(auth, browserLocalPersistence)
 export const authUIInstance = new firebaseui.auth.AuthUI(auth)
