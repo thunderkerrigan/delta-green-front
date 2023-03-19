@@ -1,10 +1,10 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
+import ReactDOMClient from 'react-dom/client'
 import './index.css'
 import './Fonts/fonts.css'
 import App from './App/App'
 import reportWebVitals from './reportWebVitals'
-import { BrowserRouter } from 'react-router-dom'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { CssBaseline } from '@mui/material'
 import '@fontsource/roboto/300.css'
 import '@fontsource/roboto/400.css'
@@ -17,18 +17,20 @@ import { FirebaseAuthProvider } from './firebase'
 import { LocalizationProvider } from '@mui/lab'
 
 const rootElement = document.getElementById('root')
+const root = rootElement && ReactDOMClient.createRoot(rootElement)
 
-ReactDOM.render(
-  <Provider store={store}>
-    <CssBaseline />
-    <FirebaseAuthProvider />
-    <BrowserRouter>
-      <LocalizationProvider dateAdapter={DateAdapter}>
+root?.render(
+  <React.StrictMode>
+    <Provider store={store}>
+      <CssBaseline />
+      <FirebaseAuthProvider />
+      {/* <LocalizationProvider dateAdapter={DateAdapter}> */}
+      <BrowserRouter>
         <App />
-      </LocalizationProvider>
-    </BrowserRouter>
-  </Provider>,
-  rootElement,
+      </BrowserRouter>
+      {/* </LocalizationProvider> */}
+    </Provider>
+  </React.StrictMode>,
 )
 
 // If you want to start measuring performance in your app, pass a function

@@ -48,7 +48,7 @@ const theme = createTheme(themeOptions)
 
 const App = (): ReactElement => {
   const user = useSelector((state: RootState) => state.user)
-
+  console.log(user)
   if (user.isLoading) {
     return (
       <div
